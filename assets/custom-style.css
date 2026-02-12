@@ -564,18 +564,38 @@ select {
   padding: 0 !important;
 }
 
-/* -- Card: thin border, clean -- */
-.collection .card--standard .card__inner {
+/* -- Card wrapper: border around the whole card -- */
+.collection .card-wrapper {
   border: 1px solid rgba(var(--color-foreground), 0.08);
-  border-radius: 0;
   transition: border-color 0.3s ease;
 }
 
-.collection .card-wrapper:hover .card--standard .card__inner {
+.collection .card-wrapper:hover {
   border-color: rgba(var(--color-foreground), 0.2);
 }
 
-/* -- Images: uniform portrait aspect, subtle zoom on hover -- */
+/* -- Remove Dawn's inner borders — wrapper has the border -- */
+.collection .card--standard .card__inner {
+  border: none !important;
+  border-radius: 0;
+}
+
+.collection .card {
+  border-radius: 0 !important;
+}
+
+/* -- Hide first card__content (inside card__inner) on desktop — use second one -- */
+.collection .card__inner > .card__content {
+  display: none;
+}
+
+/* -- Second card__content: info below image, inside the card -- */
+.collection .card > .card__content {
+  padding: 1.2rem 1.4rem 1.4rem;
+  position: relative;
+}
+
+/* -- Images: uniform portrait, subtle zoom -- */
 .collection .card__media .media {
   overflow: hidden;
   border-radius: 0;
@@ -608,12 +628,7 @@ select {
   height: 100%;
 }
 
-/* -- Card content: info below image -- */
-.collection .card__content {
-  padding: 1.2rem 1.4rem 1.4rem;
-  position: relative;
-}
-
+/* -- Card content typography -- */
 .collection .card__heading {
   font-size: 1.15rem;
   font-weight: 600;
@@ -708,9 +723,15 @@ select {
     width: 100% !important;
   }
 
-  /* Card wrapper: positioning context */
+  /* Card wrapper: reset desktop border, positioning context */
   .collection .card-wrapper {
     position: relative;
+    border: none !important;
+  }
+
+  /* Re-show first card__content for badge (hidden on desktop) */
+  .collection .card__inner > .card__content {
+    display: block !important;
   }
 
   .collection .card {
