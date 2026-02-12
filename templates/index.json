@@ -94,9 +94,9 @@
       "type": "video-break",
       "settings": {
         "video_url": "hero.mp4",
-        "heading": "Seguici nel buio",
-        "button_label": "@murdis su Instagram",
-        "button_link": "https:\/\/instagram.com\/murdis",
+        "heading": "Seguici su instagram",
+        "button_label": "@murdis.archive",
+        "button_link": "https:\/\/instagram.com\/murdis.archive",
         "height": 60,
         "overlay_opacity": 40,
         "color_scheme": "scheme-1"
