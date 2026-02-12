@@ -677,15 +677,28 @@ select {
   font-size: 0.85rem;
 }
 
-/* -- Sorting select: minimal -- */
-.collection .facet-filters__sort select {
-  background: transparent;
-  border: 1px solid rgba(var(--color-foreground), 0.1);
-  color: rgba(var(--color-foreground), 0.7);
+/* -- Sorting select: dark with white border -- */
+.collection .facet-filters__sort select,
+.collection .select__select {
+  background-color: #0a0a0a;
+  border: 1px solid #fff;
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.9rem;
   border-radius: 0;
+  padding: 0.8rem 3rem 0.8rem 1.2rem;
+}
+
+.collection .facet-filters__sort select option,
+.collection .select__select option {
+  background-color: #0a0a0a;
+  color: #fff;
+}
+
+.collection .facet-filters__sort .svg-wrapper,
+.collection .select .svg-wrapper {
+  color: #fff;
 }
 
 /* -- Product count at bottom -- */
