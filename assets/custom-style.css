@@ -617,7 +617,7 @@ select {
 .collection .product-grid .grid__item:nth-child(4n + 2) .card__media,
 .collection .product-grid .grid__item:nth-child(4n + 3) .card__media,
 .collection .product-grid .grid__item:nth-child(4n + 4) .card__media {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
 }
 
 .collection .product-grid .grid__item .media,
@@ -754,7 +754,7 @@ select {
   .collection .product-grid .grid__item:nth-child(4n + 2) .card__media,
   .collection .product-grid .grid__item:nth-child(4n + 3) .card__media,
   .collection .product-grid .grid__item:nth-child(4n + 4) .card__media {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
     border-radius: 0;
   }
 
