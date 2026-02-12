@@ -300,7 +300,7 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.name == 'index' %} template-index{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.name == 'index' %} template-index{% endif %}{% if template.suffix == 'vault' %} template-vault{% endif %}">
     <div id="murdis-loader" class="murdis-loader" aria-hidden="true">
       <div class="murdis-loader__inner">
         <img src="{{ 'carica.gif' | asset_url }}" alt="" class="murdis-loader__gif" width="120" height="120">

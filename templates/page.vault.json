@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "vault": {
+      "type": "the-vault",
+      "settings": {
+        "hero_line_1": "Nati dal",
+        "hero_line_2": "Buio",
+        "hero_line_3": "Made in Italy"
+      },
+      "blocks": {
+        "chapter_1": {
+          "type": "chapter",
+          "settings": {
+            "number": "01 — L'origine",
+            "heading": "Dove tutto ha inizio",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>"
+          }
+        },
+        "divider_1": {
+          "type": "divider"
+        },
+        "full_image_1": {
+          "type": "full_image",
+          "settings": {
+            "quote": "Non seguiamo la luce. Noi vestiamo il buio."
+          }
+        },
+        "divider_2": {
+          "type": "divider"
+        },
+        "chapter_2": {
+          "type": "chapter",
+          "settings": {
+            "number": "02 — La visione",
+            "heading": "Ogni cucitura è una scelta",
+            "text": "<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+          }
+        },
+        "divider_3": {
+          "type": "divider"
+        },
+        "chapter_3": {
+          "type": "chapter",
+          "settings": {
+            "number": "03 — Il processo",
+            "heading": "Dal pensiero alla materia",
+            "text": "<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione.</p>"
+          }
+        },
+        "divider_4": {
+          "type": "divider"
+        },
+        "manifesto": {
+          "type": "manifesto",
+          "settings": {
+            "heading": "Il nostro credo",
+            "line_1": "Ogni capo nasce da un'idea che rifiuta le regole.",
+            "line_2": "Disegnato nel silenzio, cucito con ossessione.",
+            "line_3": "Non è moda. È un'affermazione.",
+            "line_4": "Per chi ha il coraggio di indossare il buio."
+          }
+        },
+        "divider_5": {
+          "type": "divider"
+        },
+        "cta": {
+          "type": "cta",
+          "settings": {
+            "heading": "Entra nel buio",
+            "text": "Scopri la collezione e trova il capo che ti rappresenta.",
+            "button_label": "Esplora la collezione",
+            "button_link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "chapter_1",
+        "divider_1",
+        "full_image_1",
+        "divider_2",
+        "chapter_2",
+        "divider_3",
+        "chapter_3",
+        "divider_4",
+        "manifesto",
+        "divider_5",
+        "cta"
+      ]
+    }
+  },
+  "order": [
+    "vault"
+  ]
+}

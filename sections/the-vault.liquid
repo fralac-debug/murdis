@@ -1,0 +1,777 @@
+<div class="vault__progress" id="vault-progress"></div>
+<a href="/" class="vault__close" aria-label="Torna al sito">
+  <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</a>
+
+<div class="vault" id="the-vault">
+
+  {%- comment -%} HERO: fullscreen title reveal {%- endcomment -%}
+  <section class="vault__hero">
+    <div class="vault__hero-overlay"></div>
+    {% if section.settings.hero_image %}
+      <div class="vault__hero-bg">
+        {{ section.settings.hero_image | image_url: width: 2000 | image_tag: loading: 'eager' }}
+      </div>
+    {% endif %}
+    <div class="vault__hero-content">
+      <div class="vault__hero-line vault__reveal" data-vault-delay="0">
+        <span>{{ section.settings.hero_line_1 }}</span>
+      </div>
+      <div class="vault__hero-line vault__hero-line--accent vault__reveal" data-vault-delay="200">
+        <span>{{ section.settings.hero_line_2 }}</span>
+      </div>
+      <div class="vault__hero-line vault__reveal" data-vault-delay="400">
+        <span>{{ section.settings.hero_line_3 }}</span>
+      </div>
+    </div>
+    <div class="vault__scroll-indicator vault__reveal" data-vault-delay="800">
+      <span>scroll</span>
+      <div class="vault__scroll-line"></div>
+    </div>
+  </section>
+
+  {%- comment -%} CHAPTERS {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'chapter' -%}
+        <section class="vault__chapter" {{ block.shopify_attributes }}>
+          <div class="vault__chapter-inner">
+            {% if block.settings.image %}
+              <div class="vault__chapter-image vault__parallax">
+                {{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy' }}
+              </div>
+            {% endif %}
+            <div class="vault__chapter-text">
+              {% if block.settings.number != blank %}
+                <span class="vault__chapter-number vault__reveal">{{ block.settings.number }}</span>
+              {% endif %}
+              {% if block.settings.heading != blank %}
+                <h2 class="vault__chapter-heading vault__reveal">{{ block.settings.heading }}</h2>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <p class="vault__chapter-body vault__reveal">{{ block.settings.text }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+
+      {%- when 'full_image' -%}
+        <section class="vault__full-image vault__parallax-wrap" {{ block.shopify_attributes }}>
+          {% if block.settings.image %}
+            <div class="vault__full-image-bg vault__parallax">
+              {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy' }}
+            </div>
+          {% endif %}
+          {% if block.settings.quote != blank %}
+            <div class="vault__full-image-quote vault__reveal">
+              <p>&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            </div>
+          {% endif %}
+        </section>
+
+      {%- when 'manifesto' -%}
+        <section class="vault__manifesto" {{ block.shopify_attributes }}>
+          <div class="vault__manifesto-inner">
+            {% if block.settings.heading != blank %}
+              <h2 class="vault__manifesto-heading vault__reveal">{{ block.settings.heading }}</h2>
+            {% endif %}
+            {% if block.settings.line_1 != blank %}
+              <p class="vault__manifesto-line vault__reveal" data-vault-delay="100">{{ block.settings.line_1 }}</p>
+            {% endif %}
+            {% if block.settings.line_2 != blank %}
+              <p class="vault__manifesto-line vault__reveal" data-vault-delay="200">{{ block.settings.line_2 }}</p>
+            {% endif %}
+            {% if block.settings.line_3 != blank %}
+              <p class="vault__manifesto-line vault__reveal" data-vault-delay="300">{{ block.settings.line_3 }}</p>
+            {% endif %}
+            {% if block.settings.line_4 != blank %}
+              <p class="vault__manifesto-line vault__reveal" data-vault-delay="400">{{ block.settings.line_4 }}</p>
+            {% endif %}
+          </div>
+        </section>
+
+      {%- when 'divider' -%}
+        <section class="vault__divider" {{ block.shopify_attributes }}>
+          <div class="vault__divider-line vault__reveal"></div>
+        </section>
+
+      {%- when 'cta' -%}
+        <section class="vault__cta" {{ block.shopify_attributes }}>
+          <div class="vault__cta-inner">
+            {% if block.settings.heading != blank %}
+              <h2 class="vault__cta-heading vault__reveal">{{ block.settings.heading }}</h2>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <p class="vault__cta-text vault__reveal">{{ block.settings.text }}</p>
+            {% endif %}
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link }}" class="vault__cta-btn vault__reveal"
+                {% if block.settings.button_link contains '://' %}target="_blank" rel="noopener noreferrer"{% endif %}
+              >
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </section>
+
+    {%- endcase -%}
+  {%- endfor -%}
+
+</div>
+
+{% stylesheet %}
+  /* ============================================
+     THE VAULT — Cinematic About Page
+     ============================================ */
+
+  .vault {
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  /* --- Reveal animation base --- */
+  .vault__reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .vault__reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ========================
+     HERO
+     ======================== */
+  .vault__hero {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .vault__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.95) 100%
+    );
+    z-index: 2;
+  }
+
+  .vault__hero-bg {
+    position: absolute;
+    inset: -10%;
+    z-index: 1;
+  }
+
+  .vault__hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%) contrast(1.1);
+  }
+
+  .vault__hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  .vault__hero-line {
+    overflow: hidden;
+  }
+
+  .vault__hero-line span {
+    display: block;
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .vault__hero-line--accent span {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+  }
+
+  .vault__scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .vault__scroll-indicator span {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .vault__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vault__scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    animation: vault-scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes vault-scroll-pulse {
+    0%   { top: -100%; }
+    50%  { top: 100%; }
+    100% { top: 100%; }
+  }
+
+  /* ========================
+     CHAPTER
+     ======================== */
+  .vault__chapter {
+    padding: 12vh 0;
+    position: relative;
+  }
+
+  .vault__chapter-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .vault__chapter:nth-child(even) .vault__chapter-inner {
+    direction: rtl;
+  }
+
+  .vault__chapter:nth-child(even) .vault__chapter-inner > * {
+    direction: ltr;
+  }
+
+  .vault__chapter-image {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .vault__chapter-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: grayscale(20%) contrast(1.05);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .vault__chapter-image:hover img {
+    transform: scale(1.03);
+  }
+
+  .vault__chapter-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .vault__chapter-number {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+    font-weight: 600;
+  }
+
+  .vault__chapter-heading {
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .vault__chapter-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 480px;
+    font-weight: 300;
+  }
+
+  /* ========================
+     FULL IMAGE + QUOTE
+     ======================== */
+  .vault__full-image {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vault__full-image-bg {
+    position: absolute;
+    inset: -15%;
+    z-index: 1;
+  }
+
+  .vault__full-image-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(40%) contrast(1.1) brightness(0.5);
+  }
+
+  .vault__full-image-quote {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  .vault__full-image-quote p {
+    font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ========================
+     MANIFESTO
+     ======================== */
+  .vault__manifesto {
+    padding: 15vh 2rem;
+    text-align: center;
+  }
+
+  .vault__manifesto-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .vault__manifesto-heading {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .vault__manifesto-line {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.5);
+    transition-delay: var(--vault-delay, 0ms);
+  }
+
+  .vault__manifesto-line.is-visible {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* ========================
+     DIVIDER
+     ======================== */
+  .vault__divider {
+    padding: 6vh 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .vault__divider-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* ========================
+     CTA
+     ======================== */
+  .vault__cta {
+    padding: 15vh 2rem;
+    text-align: center;
+  }
+
+  .vault__cta-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .vault__cta-heading {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .vault__cta-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+  }
+
+  .vault__cta-btn {
+    display: inline-block;
+    padding: 1.1rem 3.5rem;
+    border: 1px solid #fff;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    margin-top: 1rem;
+  }
+
+  .vault__cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+  }
+
+  .vault__cta-btn:hover {
+    color: #000;
+  }
+
+  .vault__cta-btn:hover::before {
+    transform: translateY(0);
+  }
+
+  .vault__cta-btn span,
+  .vault__cta-btn {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========================
+     MOBILE
+     ======================== */
+  @media screen and (max-width: 749px) {
+    .vault__chapter-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .vault__chapter:nth-child(even) .vault__chapter-inner {
+      direction: ltr;
+    }
+
+    .vault__chapter-image {
+      order: -1;
+    }
+
+    .vault__full-image {
+      height: 60vh;
+    }
+
+    .vault__hero-line--accent span {
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+    }
+
+    .vault__manifesto {
+      padding: 10vh 1.5rem;
+    }
+
+    .vault__cta {
+      padding: 10vh 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function() {
+    /* --- Intersection Observer for reveal animations --- */
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          var delay = parseInt(el.getAttribute('data-vault-delay') || '0', 10);
+          setTimeout(function() {
+            el.classList.add('is-visible');
+          }, delay);
+          observer.unobserve(el);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.vault__reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    /* --- Parallax on scroll --- */
+    var parallaxEls = document.querySelectorAll('.vault__parallax');
+
+    function updateParallax() {
+      var scrollY = window.pageYOffset;
+      parallaxEls.forEach(function(el) {
+        var rect = el.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var viewH = window.innerHeight;
+        var offset = (center - viewH / 2) * 0.08;
+        el.style.transform = 'translateY(' + offset + 'px)';
+      });
+      requestAnimationFrame(updateParallax);
+    }
+
+    if (parallaxEls.length > 0 && window.innerWidth > 749) {
+      requestAnimationFrame(updateParallax);
+    }
+
+    /* --- Hero background subtle zoom on load --- */
+    var heroBg = document.querySelector('.vault__hero-bg');
+    if (heroBg) {
+      heroBg.style.transition = 'transform 8s cubic-bezier(0.22, 1, 0.36, 1)';
+      setTimeout(function() {
+        heroBg.style.transform = 'scale(1.05)';
+      }, 200);
+    }
+
+    /* --- Fade hero on scroll --- */
+    var heroContent = document.querySelector('.vault__hero-content');
+    var heroSection = document.querySelector('.vault__hero');
+
+    if (heroContent && heroSection) {
+      window.addEventListener('scroll', function() {
+        var scrollY = window.pageYOffset;
+        var heroH = heroSection.offsetHeight;
+        var progress = Math.min(scrollY / (heroH * 0.6), 1);
+        heroContent.style.opacity = 1 - progress;
+        heroContent.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
+      }, { passive: true });
+    }
+
+    /* --- Progress bar --- */
+    var progressBar = document.getElementById('vault-progress');
+    if (progressBar) {
+      window.addEventListener('scroll', function() {
+        var scrollY = window.pageYOffset;
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docH > 0 ? (scrollY / docH) * 100 : 0;
+        progressBar.style.width = pct + '%';
+      }, { passive: true });
+    }
+
+    /* --- Close button fade in/out with hero --- */
+    var closeBtn = document.querySelector('.vault__close');
+    if (closeBtn) {
+      closeBtn.style.opacity = '0';
+      closeBtn.style.transition = 'opacity 0.5s ease';
+      setTimeout(function() {
+        closeBtn.style.opacity = '1';
+      }, 1500);
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "The Vault",
+  "tag": "section",
+  "class": "vault-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero background image"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_1",
+      "label": "Hero line 1",
+      "default": "Born from"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_2",
+      "label": "Hero line 2",
+      "default": "Darkness"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_3",
+      "label": "Hero line 3",
+      "default": "Made in Italy"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Chapter number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "L'inizio"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body text",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "full_image",
+      "name": "Full image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Quote overlay",
+          "default": "Non seguiamo la luce. Noi vestiamo il buio."
+        }
+      ]
+    },
+    {
+      "type": "manifesto",
+      "name": "Manifesto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Il nostro credo"
+        },
+        {
+          "type": "textarea",
+          "id": "line_1",
+          "label": "Line 1",
+          "default": "Ogni capo nasce da un'idea che rifiuta le regole."
+        },
+        {
+          "type": "textarea",
+          "id": "line_2",
+          "label": "Line 2",
+          "default": "Disegnato nel silenzio, cucito con ossessione."
+        },
+        {
+          "type": "textarea",
+          "id": "line_3",
+          "label": "Line 3",
+          "default": "Non è moda. È un'affermazione."
+        },
+        {
+          "type": "textarea",
+          "id": "line_4",
+          "label": "Line 4",
+          "default": "Per chi ha il coraggio di indossare il buio."
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider"
+    },
+    {
+      "type": "cta",
+      "name": "Call to action",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Entra nel buio"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Scopri la collezione e trova il capo che ti rappresenta."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Esplora la collezione"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Vault",
+      "blocks": [
+        { "type": "chapter" },
+        { "type": "divider" },
+        { "type": "full_image" },
+        { "type": "divider" },
+        { "type": "chapter" },
+        { "type": "divider" },
+        { "type": "manifesto" },
+        { "type": "divider" },
+        { "type": "cta" }
+      ]
+    }
+  ]
+}
+{% endschema %}
