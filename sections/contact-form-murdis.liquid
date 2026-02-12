@@ -1,0 +1,433 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="contact-murdis color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="contact-murdis__inner page-width">
+
+    {%- comment -%} ── Heading ── {%- endcomment -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="contact-murdis__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="contact-murdis__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="contact-murdis__divider" aria-hidden="true"></div>
+
+    {%- comment -%} ── Form ── {%- endcomment -%}
+    {%- form 'contact', id: 'ContactFormMurdis', class: 'contact-murdis__form' -%}
+
+      {%- if form.posted_successfully? -%}
+        <div class="contact-murdis__success">
+          <span class="contact-murdis__success-icon">&#10003;</span>
+          <p>{{ 'templates.contact.form.post_success' | t }}</p>
+        </div>
+      {%- elsif form.errors -%}
+        <div class="contact-murdis__error" role="alert" tabindex="-1" autofocus>
+          <p>{{ 'templates.contact.form.error_heading' | t }}</p>
+          <ul>
+            <li>
+              <a href="#ContactFormMurdis-email">
+                {{ form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="contact-murdis__row">
+        <div class="contact-murdis__field">
+          <input
+            class="contact-murdis__input"
+            autocomplete="name"
+            type="text"
+            id="ContactFormMurdis-name"
+            name="contact[{{ 'templates.contact.form.name' | t }}]"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder=" "
+            required
+          >
+          <label class="contact-murdis__label" for="ContactFormMurdis-name">
+            {{ 'templates.contact.form.name' | t }}
+          </label>
+        </div>
+
+        <div class="contact-murdis__field">
+          <input
+            autocomplete="email"
+            type="email"
+            id="ContactFormMurdis-email"
+            class="contact-murdis__input"
+            name="contact[email]"
+            spellcheck="false"
+            autocapitalize="off"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            aria-required="true"
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="ContactFormMurdis-email-error"
+            {% endif %}
+            placeholder=" "
+            required
+          >
+          <label class="contact-murdis__label" for="ContactFormMurdis-email">
+            {{ 'templates.contact.form.email' | t }} *
+          </label>
+          {%- if form.errors contains 'email' -%}
+            <small class="contact-murdis__field-error" id="ContactFormMurdis-email-error">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
+            </small>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="contact-murdis__field">
+        <input
+          type="tel"
+          id="ContactFormMurdis-phone"
+          class="contact-murdis__input"
+          autocomplete="tel"
+          name="contact[{{ 'templates.contact.form.phone' | t }}]"
+          pattern="[0-9\-]*"
+          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          placeholder=" "
+        >
+        <label class="contact-murdis__label" for="ContactFormMurdis-phone">
+          {{ 'templates.contact.form.phone' | t }}
+        </label>
+      </div>
+
+      <div class="contact-murdis__field">
+        <textarea
+          rows="5"
+          id="ContactFormMurdis-body"
+          class="contact-murdis__input contact-murdis__textarea"
+          name="contact[{{ 'templates.contact.form.comment' | t }}]"
+          placeholder=" "
+          required
+        >{{- form.body -}}</textarea>
+        <label class="contact-murdis__label" for="ContactFormMurdis-body">
+          {{ 'templates.contact.form.comment' | t }}
+        </label>
+      </div>
+
+      <button type="submit" class="contact-murdis__submit">
+        {{ 'templates.contact.form.send' | t }}
+      </button>
+
+    {%- endform -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .contact-murdis {
+    width: 100%;
+  }
+
+  .contact-murdis__inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* -- Title -- */
+  .contact-murdis__title {
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: rgba(var(--color-foreground), 1);
+    margin: 0;
+    text-align: center;
+  }
+
+  .contact-murdis__subtitle {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.4);
+    margin: 2.6rem;
+    text-align: center;
+    max-width: 440px;
+  }
+
+  .contact-murdis__divider {
+    width: 3rem;
+    height: 1px;
+    background-color: rgba(var(--color-foreground), 0.12);
+    margin: 3rem 0;
+  }
+
+  /* -- Form -- */
+  .contact-murdis__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .contact-murdis__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  /* -- Field wrapper -- */
+  .contact-murdis__field {
+    position: relative;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .contact-murdis__row .contact-murdis__field:first-child {
+    border-right: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  /* -- Input -- */
+  .contact-murdis__input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgba(var(--color-foreground), 0.9);
+    font-size: 1.15rem;
+    font-weight: 500;
+    font-family: inherit;
+    padding: 2.4rem 0 0.8rem;
+    letter-spacing: 0.02em;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .contact-murdis__row .contact-murdis__input {
+    padding-left: 0;
+    padding-right: 1.6rem;
+  }
+
+  .contact-murdis__row .contact-murdis__field:last-child .contact-murdis__input {
+    padding-left: 1.6rem;
+    padding-right: 0;
+  }
+
+  .contact-murdis__textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+  }
+
+  .contact-murdis__input::placeholder {
+    color: transparent;
+  }
+
+  .contact-murdis__input:focus {
+    outline: none;
+  }
+
+  /* -- Label: float above on focus / filled -- */
+  .contact-murdis__label {
+    position: absolute;
+    left: 0;
+    top: 1.4rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: rgba(var(--color-foreground), 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    transform-origin: left top;
+  }
+
+  .contact-murdis__row .contact-murdis__field:last-child .contact-murdis__label {
+    left: 1.6rem;
+  }
+
+  .contact-murdis__input:focus ~ .contact-murdis__label,
+  .contact-murdis__input:not(:placeholder-shown) ~ .contact-murdis__label {
+    top: 0.4rem;
+    font-size: 0.75rem;
+    color: rgba(var(--color-foreground), 0.4);
+  }
+
+  /* -- Field error -- */
+  .contact-murdis__field-error {
+    display: block;
+    color: #e55;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* -- Submit button -- */
+  .contact-murdis__submit {
+    margin-top: 3rem;
+    align-self: flex-start;
+    background: rgba(var(--color-foreground), 1);
+    color: rgba(var(--color-background), 1);
+    border: none;
+    padding: 1.4rem 4rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    cursor: pointer;
+    transition: opacity 0.3s ease, letter-spacing 0.3s ease;
+    font-family: inherit;
+  }
+
+  .contact-murdis__submit:hover {
+    opacity: 0.8;
+    letter-spacing: 0.24em;
+  }
+
+  /* -- Success message -- */
+  .contact-murdis__success {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.6rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    color: rgba(var(--color-foreground), 0.7);
+    font-size: 1.1rem;
+  }
+
+  .contact-murdis__success-icon {
+    font-size: 1.4rem;
+    color: #6d6;
+  }
+
+  .contact-murdis__success p {
+    margin: 0;
+  }
+
+  /* -- Error message -- */
+  .contact-murdis__error {
+    padding: 1.6rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 80, 80, 0.2);
+    color: #e55;
+    font-size: 1rem;
+  }
+
+  .contact-murdis__error p {
+    margin: 0 0 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .contact-murdis__error ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .contact-murdis__error a {
+    color: #e55;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* -- Mobile -- */
+  @media screen and (max-width: 749px) {
+    .contact-murdis__inner {
+      padding: 0 1.2rem;
+    }
+
+    .contact-murdis__row {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-murdis__row .contact-murdis__field:first-child {
+      border-right: none;
+    }
+
+    .contact-murdis__row .contact-murdis__input,
+    .contact-murdis__row .contact-murdis__field:last-child .contact-murdis__input {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .contact-murdis__row .contact-murdis__field:last-child .contact-murdis__label {
+      left: 0;
+    }
+
+    .contact-murdis__submit {
+      width: 100%;
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Get in touch",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "default": "Questions, collaborations, or just want to say hi? Drop us a line.",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form Murdis"
+    }
+  ]
+}
+{% endschema %}

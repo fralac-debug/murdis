@@ -1,0 +1,433 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Critical: hide items before scroll reveal */
+  .spine-info-{{ section.id }} .spine-info__item {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .spine-info-{{ section.id }} .spine-info__item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+{%- endstyle -%}
+
+<div class="spine-info spine-info-{{ section.id }} color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="spine-info__wrapper page-width">
+
+    {%- if section.settings.title != blank -%}
+      <h2 class="spine-info__heading">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    <div class="spine-info__container">
+      {%- comment -%} Spine image — central axis {%- endcomment -%}
+      <div class="spine-info__spine" aria-hidden="true">
+        <img
+          src="{{ 'spina.png' | asset_url }}"
+          alt=""
+          class="spine-info__spine-img"
+          loading="lazy"
+          width="200"
+          height="1400"
+        >
+      </div>
+
+      {%- comment -%} Info items positioned along the spine {%- endcomment -%}
+      <div class="spine-info__items">
+        {%- for block in section.blocks -%}
+          <div
+            class="spine-info__item spine-info__item--{{ forloop.index | modulo: 2 | plus: 1 }}"
+            style="--item-delay: {{ forloop.index0 | times: 150 }}ms;"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.label != blank -%}
+              <span class="spine-info__label">{{ block.settings.label }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="spine-info__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="spine-info__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+            {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+              <a href="{{ block.settings.link_url }}" class="spine-info__link" {% if block.settings.link_external %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                {{ block.settings.link_label }}
+                <span class="spine-info__arrow">&rarr;</span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .spine-info {
+    width: 100%;
+    background-color: transparent !important;
+    overflow: hidden;
+  }
+
+  .spine-info__wrapper {
+    position: relative;
+  }
+
+  .spine-info__heading {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(var(--color-foreground), 0.9);
+    margin: 0 0 6rem;
+  }
+
+  /* -- Container: spine + items -- */
+  .spine-info__container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 600px;
+  }
+
+  /* -- Central spine image -- */
+  .spine-info__spine {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .spine-info__spine-img {
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.12;
+    filter: brightness(10);
+  }
+
+  /* -- Items grid -- */
+  .spine-info__items {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 2rem 0;
+  }
+
+  /* -- Single item -- */
+  .spine-info__item {
+    max-width: 340px;
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition-delay: var(--item-delay, 0ms);
+  }
+
+  /* Alternate sides: odd left, even right */
+  .spine-info__item--1 {
+    align-self: flex-start;
+    text-align: right;
+    margin-left: 0;
+    margin-right: auto;
+    padding-right: 80px;
+  }
+
+  .spine-info__item--2 {
+    align-self: flex-end;
+    text-align: left;
+    margin-right: 0;
+    margin-left: auto;
+    padding-left: 80px;
+  }
+
+  /* -- Label (small tag above title) -- */
+  .spine-info__label {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(var(--color-foreground), 0.3);
+    margin-bottom: 0.6rem;
+  }
+
+  /* -- Title -- */
+  .spine-info__title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(var(--color-foreground), 0.95);
+    margin: 0 0 0.8rem;
+    line-height: 1.2;
+  }
+
+  /* -- Text -- */
+  .spine-info__text {
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.5);
+    margin: 0;
+  }
+
+  /* -- Link -- */
+  .spine-info__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(var(--color-foreground), 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .spine-info__link:hover {
+    color: rgba(var(--color-foreground), 1);
+  }
+
+  .spine-info__arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .spine-info__link:hover .spine-info__arrow {
+    transform: translateX(4px);
+  }
+
+  /* Align link based on text-align */
+  .spine-info__item--1 .spine-info__link {
+    justify-content: flex-end;
+  }
+
+  /* -- Mobile: centered layout, spine behind -- */
+  @media screen and (max-width: 749px) {
+    .spine-info__heading {
+      font-size: 1.1rem;
+      margin-bottom: 4rem;
+    }
+
+    .spine-info__container {
+      min-height: auto;
+    }
+
+    .spine-info__spine {
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+    }
+
+    .spine-info__spine-img {
+      opacity: 0.05;
+    }
+
+    .spine-info__items {
+      gap: 3.6rem;
+    }
+
+    .spine-info__item--1,
+    .spine-info__item--2 {
+      align-self: center;
+      text-align: center;
+      margin: 0 auto;
+      padding: 0 2rem;
+      max-width: 320px;
+    }
+
+    .spine-info__item--1 .spine-info__link {
+      justify-content: center;
+    }
+
+    .spine-info__item--2 .spine-info__link {
+      justify-content: center;
+    }
+
+    .spine-info__title {
+      font-size: 1.4rem;
+    }
+
+    .spine-info__text {
+      font-size: 1.15rem;
+    }
+
+    .spine-info__label {
+      font-size: 0.8rem;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  (function() {
+    var section = document.querySelector('.spine-info-{{ section.id }}');
+    if (!section) return;
+
+    var items = section.querySelectorAll('.spine-info__item');
+    if (!items.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    items.forEach(function(item) {
+      observer.observe(item);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.spine_info.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.spine_info.settings.title.label",
+      "default": "t:sections.spine_info.settings.title.default"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_point",
+      "name": "t:sections.spine_info.blocks.info_point.name",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.spine_info.blocks.info_point.settings.label.label",
+          "default": "t:sections.spine_info.blocks.info_point.settings.label.default"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.spine_info.blocks.info_point.settings.title.label",
+          "default": "t:sections.spine_info.blocks.info_point.settings.title.default"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.spine_info.blocks.info_point.settings.text.label",
+          "default": "t:sections.spine_info.blocks.info_point.settings.text.default"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "t:sections.spine_info.blocks.info_point.settings.link_label.label"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "t:sections.spine_info.blocks.info_point.settings.link_url.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "link_external",
+          "label": "t:sections.spine_info.blocks.info_point.settings.link_external.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.spine_info.presets.name",
+      "blocks": [
+        {
+          "type": "info_point",
+          "settings": {
+            "label": "Quality",
+            "title": "Premium materials",
+            "text": "Every piece is crafted with carefully selected fabrics and hardware."
+          }
+        },
+        {
+          "type": "info_point",
+          "settings": {
+            "label": "Shipping",
+            "title": "Free over €50",
+            "text": "Fast delivery across Europe. Free shipping on orders over €50."
+          }
+        },
+        {
+          "type": "info_point",
+          "settings": {
+            "label": "Returns",
+            "title": "30-day returns",
+            "text": "Not satisfied? Return within 30 days, no questions asked."
+          }
+        },
+        {
+          "type": "info_point",
+          "settings": {
+            "label": "Follow us",
+            "title": "@murdis",
+            "text": "Join the pack. New drops, behind the scenes, exclusive content.",
+            "link_label": "Instagram",
+            "link_url": "https://instagram.com/murdis",
+            "link_external": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

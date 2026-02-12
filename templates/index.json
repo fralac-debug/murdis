@@ -1,0 +1,162 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-video",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Murdis",
+            "heading_size": "hxl"
+          }
+        },
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Abbigliamento e accessori dal morso unico"
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Scopri ora",
+            "button_link_1": "shopify:\/\/collections\/all",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "subheading",
+        "buttons"
+      ],
+      "settings": {
+        "video_url": "",
+        "asset_image": "hero.JPG",
+        "overlay_opacity": 40,
+        "content_position": "middle-center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "spotlight": {
+      "type": "spotlight-collection",
+      "settings": {
+        "title": "Nuovi arrivi",
+        "subtitle": "I pezzi selezionati dall'ultimo drop",
+        "collection": "all",
+        "products_to_show": 6,
+        "show_view_all": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "manifesto": {
+      "type": "manifesto",
+      "blocks": {
+        "line_1": {
+          "type": "line",
+          "settings": {
+            "text": "Nati dall'oscurità."
+          }
+        },
+        "line_2": {
+          "type": "line",
+          "settings": {
+            "text": "Indossati con morso."
+          }
+        },
+        "divider": {
+          "type": "divider"
+        },
+        "tagline": {
+          "type": "tagline",
+          "settings": {
+            "text": "Est. 2026"
+          }
+        }
+      },
+      "block_order": [
+        "line_1",
+        "line_2",
+        "divider",
+        "tagline"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "video-break": {
+      "type": "video-break",
+      "settings": {
+        "video_url": "hero.mp4",
+        "heading": "Seguici nel buio",
+        "button_label": "@murdis su Instagram",
+        "button_link": "https:\/\/instagram.com\/murdis",
+        "height": 60,
+        "overlay_opacity": 40,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "spine": {
+      "type": "spine-info",
+      "blocks": {
+        "made_in_italy": {
+          "type": "info_point",
+          "settings": {
+            "label": "Origine",
+            "title": "Made in Italy",
+            "text": "Pensato, disegnato e prodotto in Italia. Dalla creatività alla cucitura, tutto nasce qui."
+          }
+        },
+        "quality": {
+          "type": "info_point",
+          "settings": {
+            "label": "Qualità",
+            "title": "Materiali premium",
+            "text": "Ogni pezzo è realizzato con tessuti e accessori selezionati con cura."
+          }
+        },
+        "shipping": {
+          "type": "info_point",
+          "settings": {
+            "label": "Spedizione",
+            "title": "Spedizione veloce",
+            "text": "Consegna rapida in tutta Europa. Il tuo ordine parte entro 24–48 ore."
+          }
+        },
+        "returns": {
+          "type": "info_point",
+          "settings": {
+            "label": "Resi",
+            "title": "Reso entro 14 giorni",
+            "text": "Non sei soddisfatto? Restituisci entro 14 giorni, senza domande."
+          }
+        }
+      },
+      "block_order": [
+        "made_in_italy",
+        "quality",
+        "shipping",
+        "returns"
+      ],
+      "settings": {
+        "title": "Il nostro DNA",
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "spotlight",
+    "manifesto",
+    "video-break",
+    "spine"
+  ]
+}

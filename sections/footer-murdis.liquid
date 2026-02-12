@@ -1,0 +1,607 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<footer class="murdis-footer color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" role="contentinfo">
+  <div class="murdis-footer__inner page-width">
+
+    {%- comment -%} ── Top: Logo + tagline ── {%- endcomment -%}
+    <div class="murdis-footer__brand">
+      <a href="{{ routes.root_url }}" class="murdis-footer__logo-link" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 300 | image_tag: class: 'murdis-footer__logo', loading: 'lazy' }}
+        {%- else -%}
+          <img
+            src="{{ 'logo.png' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            class="murdis-footer__logo"
+            width="120"
+            height="120"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </a>
+      {%- if section.settings.tagline != blank -%}
+        <p class="murdis-footer__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ── Newsletter ── {%- endcomment -%}
+    {%- if section.settings.newsletter_enable -%}
+      <div class="murdis-footer__newsletter">
+        {%- if section.settings.newsletter_heading != blank -%}
+          <p class="murdis-footer__newsletter-heading">{{ section.settings.newsletter_heading }}</p>
+        {%- endif -%}
+        {%- form 'customer', id: 'MurdisFooterNewsletter', class: 'murdis-footer__newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="murdis-footer__newsletter-field">
+            <input
+              id="NewsletterForm--{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="murdis-footer__newsletter-input"
+              value="{{ form.email }}"
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              {% if form.errors %}
+                autofocus
+                aria-invalid="true"
+                aria-describedby="MurdisFooterNewsletter-error"
+              {% elsif form.posted_successfully? %}
+                aria-describedby="MurdisFooterNewsletter-success"
+              {% endif %}
+              placeholder="{{ 'newsletter.label' | t }}"
+              required
+            >
+            <button type="submit" class="murdis-footer__newsletter-btn" aria-label="{{ 'newsletter.button_label' | t }}">
+              &rarr;
+            </button>
+          </div>
+          {%- if form.errors -%}
+            <p class="murdis-footer__newsletter-msg murdis-footer__newsletter-msg--error" id="MurdisFooterNewsletter-error">
+              {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+            </p>
+          {%- endif -%}
+          {%- if form.posted_successfully? -%}
+            <p class="murdis-footer__newsletter-msg murdis-footer__newsletter-msg--success" id="MurdisFooterNewsletter-success" tabindex="-1" autofocus>
+              {{ 'newsletter.success' | t }}
+            </p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ── Divider ── {%- endcomment -%}
+    <hr class="murdis-footer__divider" aria-hidden="true">
+
+    {%- comment -%} ── Middle: Links columns ── {%- endcomment -%}
+    <div class="murdis-footer__links">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <div class="murdis-footer__links-col" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="murdis-footer__links-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="murdis-footer__links-list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li>
+                      <a href="{{ link.url }}" class="murdis-footer__link">
+                        {{ link.title | escape }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+          {%- when 'social' -%}
+            <div class="murdis-footer__links-col murdis-footer__links-col--social" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="murdis-footer__links-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              <ul class="murdis-footer__social-list">
+                {%- if settings.social_instagram_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_instagram_link }}" class="murdis-footer__link" target="_blank" rel="noopener noreferrer">Instagram</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_tiktok_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_tiktok_link }}" class="murdis-footer__link" target="_blank" rel="noopener noreferrer">TikTok</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_facebook_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_facebook_link }}" class="murdis-footer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_twitter_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_twitter_link }}" class="murdis-footer__link" target="_blank" rel="noopener noreferrer">X</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_youtube_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_youtube_link }}" class="murdis-footer__link" target="_blank" rel="noopener noreferrer">YouTube</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_pinterest_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_pinterest_link }}" class="murdis-footer__link" target="_blank" rel="noopener noreferrer">Pinterest</a>
+                  </li>
+                {%- endif -%}
+              </ul>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} ── Policy links ── {%- endcomment -%}
+    {%- if section.settings.show_policy -%}
+      {%- assign has_policies = false -%}
+      {%- for policy in shop.policies -%}
+        {%- if policy != blank -%}
+          {%- assign has_policies = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if has_policies -%}
+        <div class="murdis-footer__policies">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <a href="{{ policy.url }}" class="murdis-footer__policy-link">{{ policy.title | escape }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} ── Legal info (P.IVA etc.) ── {%- endcomment -%}
+    {%- if section.settings.legal_info != blank -%}
+      <div class="murdis-footer__legal">
+        {{ section.settings.legal_info }}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ── Bottom bar: copyright + payment ── {%- endcomment -%}
+    <div class="murdis-footer__bottom">
+      <div class="murdis-footer__copyright">
+        <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      </div>
+      {%- if section.settings.payment_enable -%}
+        <div class="murdis-footer__payment">
+          <ul class="murdis-footer__payment-list" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li class="murdis-footer__payment-item">
+                {{ type | payment_type_svg_tag: class: 'murdis-footer__payment-icon' }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</footer>
+
+{% stylesheet %}
+  .murdis-footer {
+    width: 100%;
+    background-color: transparent !important;
+  }
+
+  .murdis-footer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Brand / Logo ── */
+  .murdis-footer__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+    margin-bottom: 4rem;
+  }
+
+  .murdis-footer__logo-link {
+    display: block;
+    line-height: 0;
+  }
+
+  .murdis-footer__logo {
+    width: auto;
+    height: 100px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
+
+  .murdis-footer__logo-link:hover .murdis-footer__logo {
+    opacity: 1;
+  }
+
+  .murdis-footer__tagline {
+    font-size: 1.1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(var(--color-foreground), 0.35);
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ── Newsletter ── */
+  .murdis-footer__newsletter {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .murdis-footer__newsletter-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(var(--color-foreground), 0.6);
+    margin: 0 0 1.6rem;
+  }
+
+  .murdis-footer__newsletter-field {
+    display: flex;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.2);
+    transition: border-color 0.3s ease;
+  }
+
+  .murdis-footer__newsletter-field:focus-within {
+    border-color: rgba(var(--color-foreground), 0.8);
+  }
+
+  .murdis-footer__newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 1.2rem 0;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: rgba(var(--color-foreground), 1);
+    font-family: inherit;
+  }
+
+  .murdis-footer__newsletter-input::placeholder {
+    color: rgba(var(--color-foreground), 0.25);
+    text-transform: lowercase;
+  }
+
+  .murdis-footer__newsletter-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 1.2rem 0 1.2rem 1.6rem;
+    font-size: 1.8rem;
+    color: rgba(var(--color-foreground), 0.4);
+    transition: color 0.3s ease, transform 0.3s ease;
+    font-family: inherit;
+  }
+
+  .murdis-footer__newsletter-btn:hover {
+    color: rgba(var(--color-foreground), 1);
+    transform: translateX(3px);
+  }
+
+  .murdis-footer__newsletter-msg {
+    font-size: 0.95rem;
+    margin: 1rem 0 0;
+    letter-spacing: 0.05em;
+  }
+
+  .murdis-footer__newsletter-msg--error {
+    color: #e74c3c;
+  }
+
+  .murdis-footer__newsletter-msg--success {
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  /* ── Divider ── */
+  .murdis-footer__divider {
+    width: 100%;
+    border: none;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    margin: 0 0 4rem;
+  }
+
+  /* ── Links columns ── */
+  .murdis-footer__links {
+    display: flex;
+    justify-content: center;
+    gap: 6rem;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .murdis-footer__links-col {
+    min-width: 140px;
+  }
+
+  .murdis-footer__links-heading {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(var(--color-foreground), 0.9);
+    margin: 0 0 1.4rem;
+  }
+
+  .murdis-footer__links-list,
+  .murdis-footer__social-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .murdis-footer__link {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(var(--color-foreground), 0.4);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .murdis-footer__link:hover {
+    color: rgba(var(--color-foreground), 1);
+  }
+
+  /* ── Policies ── */
+  .murdis-footer__policies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .murdis-footer__policy-link {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(var(--color-foreground), 0.25);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+  }
+
+  .murdis-footer__policy-link:hover {
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  /* ── Legal info ── */
+  .murdis-footer__legal {
+    font-size: 0.85rem;
+    color: rgba(var(--color-foreground), 0.2);
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  /* ── Bottom bar ── */
+  .murdis-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.06);
+  }
+
+  .murdis-footer__copyright {
+    font-size: 0.85rem;
+    color: rgba(var(--color-foreground), 0.2);
+    letter-spacing: 0.04em;
+  }
+
+  .murdis-footer__payment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  .murdis-footer__payment-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .murdis-footer__payment-icon {
+    width: 38px;
+    height: auto;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
+
+  .murdis-footer__payment-item:hover .murdis-footer__payment-icon {
+    opacity: 0.8;
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 749px) {
+    .murdis-footer__logo {
+      height: 80px;
+    }
+
+    .murdis-footer__tagline {
+      font-size: 0.95rem;
+      letter-spacing: 0.2em;
+    }
+
+    .murdis-footer__links {
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .murdis-footer__links-col {
+      min-width: auto;
+    }
+
+    .murdis-footer__bottom {
+      flex-direction: column;
+      gap: 1.6rem;
+      text-align: center;
+    }
+
+    .murdis-footer__payment-list {
+      justify-content: center;
+    }
+
+    .murdis-footer__newsletter-input {
+      font-size: 1.2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "t:sections.footer.blocks.link_list.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.footer.blocks.link_list.settings.heading.label",
+          "default": "Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "default": "footer",
+          "label": "t:sections.footer.blocks.link_list.settings.menu.label"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.footer.blocks.link_list.settings.heading.label",
+          "default": "Follow"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Clothing & accessories with a unique bite"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "default": true,
+      "label": "t:sections.footer.settings.newsletter_enable.label"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "default": "Join the pack",
+      "label": "t:sections.footer.settings.newsletter_heading.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policy",
+      "default": true,
+      "label": "t:sections.footer.settings.show_policy.label"
+    },
+    {
+      "type": "textarea",
+      "id": "legal_info",
+      "label": "Legal info (P.IVA, sede legale)",
+      "default": "Murdis"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_enable",
+      "default": true,
+      "label": "t:sections.footer.settings.payment_enable.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "link_list"
+      },
+      {
+        "type": "social"
+      }
+    ]
+  }
+}
+{% endschema %}

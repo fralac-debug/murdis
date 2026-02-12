@@ -1,0 +1,49 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer-murdis",
+      "blocks": {
+        "links_shop": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Negozio",
+            "menu": "main-menu"
+          }
+        },
+        "links_info": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Info",
+            "menu": "footer"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "Seguici"
+          }
+        }
+      },
+      "block_order": [
+        "links_shop",
+        "links_info",
+        "social"
+      ],
+      "settings": {
+        "tagline": "Abbigliamento e accessori dal morso unico",
+        "color_scheme": "scheme-4",
+        "newsletter_enable": true,
+        "newsletter_heading": "Unisciti al branco",
+        "show_policy": true,
+        "payment_enable": true,
+        "padding_top": 80,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

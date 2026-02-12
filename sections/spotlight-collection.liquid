@@ -1,0 +1,429 @@
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign products_to_show = section.settings.products_to_show
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="spotlight color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="spotlight__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {%- if section.settings.title != blank -%}
+      <h2 class="spotlight__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    <div class="spotlight__divider"></div>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="spotlight__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="spotlight__grid page-width">
+    {%- if collection != blank and collection.products_count > 0 -%}
+      {%- for product in collection.products limit: products_to_show -%}
+        <div
+          class="spotlight__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            style="animation-delay: {{ forloop.index0 | times: 100 }}ms;"
+          {% endif %}
+        >
+          <a href="{{ product.url }}" class="spotlight__link">
+            <div class="spotlight__media">
+              {%- if product.featured_media -%}
+                <img
+                  srcset="
+                    {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                    {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
+                  "
+                  src="{{ product.featured_media | image_url: width: 720 }}"
+                  alt="{{ product.featured_media.alt | default: product.title | escape }}"
+                  class="spotlight__img spotlight__img--primary"
+                  loading="lazy"
+                  width="{{ product.featured_media.width }}"
+                  height="{{ product.featured_media.height }}"
+                >
+                {%- if product.media[1] != null -%}
+                  <img
+                    srcset="
+                      {%- if product.media[1].width >= 360 -%}{{ product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
+                      {%- if product.media[1].width >= 533 -%}{{ product.media[1] | image_url: width: 533 }} 533w,{%- endif -%}
+                      {%- if product.media[1].width >= 720 -%}{{ product.media[1] | image_url: width: 720 }} 720w,{%- endif -%}
+                      {%- if product.media[1].width >= 940 -%}{{ product.media[1] | image_url: width: 940 }} 940w,{%- endif -%}
+                      {{ product.media[1] | image_url }} {{ product.media[1].width }}w
+                    "
+                    src="{{ product.media[1] | image_url: width: 720 }}"
+                    alt="{{ product.media[1].alt | default: product.title | escape }}"
+                    class="spotlight__img spotlight__img--secondary"
+                    loading="lazy"
+                    width="{{ product.media[1].width }}"
+                    height="{{ product.media[1].height }}"
+                  >
+                {%- endif -%}
+              {%- else -%}
+                <div class="spotlight__placeholder">
+                  {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+
+              {%- if product.available == false -%}
+                <span class="spotlight__badge">{{ 'products.product.sold_out' | t }}</span>
+              {%- elsif product.compare_at_price > product.price -%}
+                <span class="spotlight__badge spotlight__badge--sale">{{ 'products.product.on_sale' | t }}</span>
+              {%- endif -%}
+            </div>
+
+            <div class="spotlight__info">
+              <h3 class="spotlight__product-title">{{ product.title | escape }}</h3>
+              <div class="spotlight__price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="spotlight__price--compare">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+                <span class="spotlight__price--current{% if product.compare_at_price > product.price %} spotlight__price--on-sale{% endif %}">
+                  {{ product.price | money }}
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..products_to_show) -%}
+        <div class="spotlight__item">
+          <div class="spotlight__link">
+            <div class="spotlight__media">
+              <div class="spotlight__placeholder">
+                {%- assign placeholder_index = forloop.index | modulo: 6 | plus: 1 -%}
+                {{ 'product-apparel-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            </div>
+            <div class="spotlight__info">
+              <h3 class="spotlight__product-title">{{ 'onboarding.product_title' | t }}</h3>
+              <div class="spotlight__price">
+                <span class="spotlight__price--current">{{ 0 | money }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_view_all and collection != blank -%}
+    <div class="spotlight__footer page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <a href="{{ collection.url }}" class="spotlight__view-all">
+        {{ 'sections.spotlight_collection.view_all' | t }}
+        <span class="spotlight__arrow">&rarr;</span>
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .spotlight {
+    width: 100%;
+    background-color: transparent !important;
+  }
+
+  /* -- Header -- */
+  .spotlight__header {
+    text-align: center;
+    margin-bottom: 5.6rem;
+  }
+
+  .spotlight__title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(var(--color-foreground), 0.9);
+    margin: 0 0 2rem;
+  }
+
+  .spotlight__divider {
+    width: 6rem;
+    height: 1px;
+    background-color: rgba(var(--color-foreground), 0.15);
+    margin: 0 auto 2rem;
+  }
+
+  .spotlight__subtitle {
+    font-size: 1.4rem;
+    color: rgba(var(--color-foreground), 0.45);
+    margin: 0 0 2rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* -- Grid -- */
+  .spotlight__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .spotlight__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .spotlight__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem;
+    }
+  }
+
+  /* -- Item -- */
+  .spotlight__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* -- Media -- */
+  .spotlight__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background-color: rgba(var(--color-foreground), 0.03);
+  }
+
+  .spotlight__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+                opacity 0.7s ease,
+                filter 0.7s ease;
+  }
+
+  .spotlight__img--primary {
+    filter: saturate(0.85);
+  }
+
+  .spotlight__item:hover .spotlight__img--primary {
+    filter: saturate(1);
+    transform: scale(1.04);
+  }
+
+  /* Crossfade secondary */
+  .spotlight__img--secondary {
+    opacity: 0;
+  }
+
+  .spotlight__item:hover .spotlight__img--secondary {
+    opacity: 1;
+  }
+
+  .spotlight__item:hover .spotlight__img--primary:not(:only-child) {
+    opacity: 0;
+  }
+
+  .spotlight__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--color-foreground), 0.05);
+  }
+
+  .spotlight__placeholder svg {
+    width: 60%;
+    opacity: 0.3;
+  }
+
+  /* -- Badge -- */
+  .spotlight__badge {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 1.2rem;
+    background-color: rgba(var(--color-foreground), 0.9);
+    color: rgb(var(--color-background));
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.5rem 1rem;
+    z-index: 1;
+  }
+
+  /* -- Info -- */
+  .spotlight__info {
+    padding: 1.6rem 0.2rem 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    transform: translateY(0);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+
+  .spotlight__item:hover .spotlight__info {
+    transform: translateY(-4px);
+  }
+
+  .spotlight__product-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(var(--color-foreground), 0.85);
+    transition: color 0.3s ease;
+  }
+
+  .spotlight__item:hover .spotlight__product-title {
+    color: rgba(var(--color-foreground), 1);
+  }
+
+  .spotlight__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .spotlight__price--current {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  .spotlight__price--on-sale {
+    color: rgba(var(--color-foreground), 0.8);
+  }
+
+  .spotlight__price--compare {
+    font-size: 1.1rem;
+    text-decoration: line-through;
+    color: rgba(var(--color-foreground), 0.3);
+  }
+
+  /* -- Footer / View all -- */
+  .spotlight__footer {
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .spotlight__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(var(--color-foreground), 0.5);
+    text-decoration: none;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.15);
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .spotlight__view-all:hover {
+    color: rgba(var(--color-foreground), 1);
+    border-color: rgba(var(--color-foreground), 0.5);
+    opacity: 1;
+  }
+
+  .spotlight__arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .spotlight__view-all:hover .spotlight__arrow {
+    transform: translateX(4px);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.spotlight_collection.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.spotlight_collection.settings.title.label",
+      "default": "t:sections.spotlight_collection.settings.title.default"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.spotlight_collection.settings.subtitle.label",
+      "default": "t:sections.spotlight_collection.settings.subtitle.default"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.spotlight_collection.settings.collection.label"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6,
+      "label": "t:sections.spotlight_collection.settings.products_to_show.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "t:sections.spotlight_collection.settings.show_view_all.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.spotlight_collection.presets.name"
+    }
+  ]
+}
+{% endschema %}

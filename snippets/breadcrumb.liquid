@@ -1,0 +1,159 @@
+{% doc %}
+  Renders a breadcrumb navigation with JSON-LD structured data for SEO.
+  Automatically detects the page type and builds the correct breadcrumb trail.
+
+  @example
+  {% render 'breadcrumb' %}
+{% enddoc %}
+
+{%- liquid
+  assign crumbs = ''
+  assign t_home = 'general.breadcrumbs.home' | t
+
+  case request.page_type
+    when 'product'
+      if collection
+        assign crumbs = crumbs | append: collection.title | append: '||' | append: collection.url | append: ';;'
+      elsif product.collections.size > 0
+        assign first_col = product.collections.first
+        assign crumbs = crumbs | append: first_col.title | append: '||' | append: first_col.url | append: ';;'
+      endif
+      assign crumbs = crumbs | append: product.title | append: '||' | append: product.url | append: ';;'
+
+    when 'collection'
+      assign crumbs = crumbs | append: collection.title | append: '||' | append: collection.url | append: ';;'
+
+    when 'article'
+      assign crumbs = crumbs | append: blog.title | append: '||' | append: blog.url | append: ';;'
+      assign crumbs = crumbs | append: article.title | append: '||' | append: article.url | append: ';;'
+
+    when 'blog'
+      assign crumbs = crumbs | append: blog.title | append: '||' | append: blog.url | append: ';;'
+
+    when 'page'
+      assign crumbs = crumbs | append: page.title | append: '||' | append: page.url | append: ';;'
+
+    when 'search'
+      assign search_label = 'general.breadcrumbs.search' | t
+      assign crumbs = crumbs | append: search_label | append: '||' | append: routes.search_url | append: ';;'
+
+    when 'cart'
+      assign cart_label = 'general.breadcrumbs.cart' | t
+      assign crumbs = crumbs | append: cart_label | append: '||' | append: routes.cart_url | append: ';;'
+
+    when 'list-collections'
+      assign collections_label = 'general.breadcrumbs.collections' | t
+      assign crumbs = crumbs | append: collections_label | append: '||' | append: routes.collections_url | append: ';;'
+  endcase
+
+  assign crumb_array = crumbs | split: ';;'
+-%}
+
+{%- if crumb_array.size > 0 -%}
+  <nav class="breadcrumb" aria-label="{{ 'general.breadcrumbs.label' | t }}">
+    <ol class="breadcrumb__list">
+      <li class="breadcrumb__item">
+        <a href="{{ routes.root_url }}" class="breadcrumb__link">{{ t_home }}</a>
+      </li>
+      {%- for crumb in crumb_array -%}
+        {%- if crumb != '' -%}
+          {%- assign parts = crumb | split: '||' -%}
+          {%- assign crumb_title = parts[0] -%}
+          {%- assign crumb_url = parts[1] -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__sep" aria-hidden="true">/</span>
+            {%- if forloop.last -%}
+              <span class="breadcrumb__current" aria-current="page">{{ crumb_title | escape }}</span>
+            {%- else -%}
+              <a href="{{ crumb_url }}" class="breadcrumb__link">{{ crumb_title | escape }}</a>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+  </nav>
+
+  {%- comment -%} JSON-LD BreadcrumbList for Google {%- endcomment -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ t_home | json }},
+          "item": "{{ request.origin }}{{ routes.root_url }}"
+        }
+        {%- for crumb in crumb_array -%}
+          {%- if crumb != '' -%}
+            {%- assign parts = crumb | split: '||' -%}
+            ,{
+              "@type": "ListItem",
+              "position": {{ forloop.index | plus: 1 }},
+              "name": {{ parts[0] | json }}
+              {%- unless forloop.last -%}
+                ,"item": "{{ request.origin }}{{ parts[1] }}"
+              {%- endunless -%}
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .breadcrumb {
+    padding: 1.6rem 0 0.8rem;
+  }
+
+  .breadcrumb__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .breadcrumb__item {
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumb__link {
+    color: rgba(var(--color-foreground), 0.3);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb__link:hover {
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .breadcrumb__sep {
+    margin: 0 0.8rem;
+    color: rgba(var(--color-foreground), 0.15);
+    font-weight: 300;
+  }
+
+  .breadcrumb__current {
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  @media screen and (max-width: 749px) {
+    .breadcrumb {
+      padding: 1.2rem 1.5rem 0.4rem;
+    }
+
+    .breadcrumb__item {
+      font-size: 0.95rem;
+    }
+  }
+{% endstylesheet %}

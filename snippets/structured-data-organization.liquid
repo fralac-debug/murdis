@@ -1,0 +1,73 @@
+{% doc %}
+  Outputs Organization / Store JSON-LD structured data for SEO.
+  Renders once in theme.liquid on the homepage for Google Knowledge Panel.
+
+  @example
+  {% render 'structured-data-organization' %}
+{% enddoc %}
+
+{%- if request.page_type == 'index' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": "{{ request.origin }}{{ routes.root_url }}",
+      {%- if settings.logo != blank -%}
+        "logo": "https:{{ settings.logo | image_url: width: 600 }}",
+      {%- endif -%}
+      {%- if shop.description != blank -%}
+        "description": {{ shop.description | json }},
+      {%- endif -%}
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": "{{ request.origin }}/pages/contatti"
+      }
+      {%- assign social_links = '' -%}
+      {%- if settings.social_instagram_link != blank -%}
+        {%- assign social_links = social_links | append: settings.social_instagram_link | append: ',' -%}
+      {%- endif -%}
+      {%- if settings.social_facebook_link != blank -%}
+        {%- assign social_links = social_links | append: settings.social_facebook_link | append: ',' -%}
+      {%- endif -%}
+      {%- if settings.social_tiktok_link != blank -%}
+        {%- assign social_links = social_links | append: settings.social_tiktok_link | append: ',' -%}
+      {%- endif -%}
+      {%- if settings.social_twitter_link != blank -%}
+        {%- assign social_links = social_links | append: settings.social_twitter_link | append: ',' -%}
+      {%- endif -%}
+      {%- if settings.social_youtube_link != blank -%}
+        {%- assign social_links = social_links | append: settings.social_youtube_link | append: ',' -%}
+      {%- endif -%}
+      {%- if settings.social_pinterest_link != blank -%}
+        {%- assign social_links = social_links | append: settings.social_pinterest_link | append: ',' -%}
+      {%- endif -%}
+      {%- if social_links != '' -%}
+        {%- assign social_links = social_links | split: ',' -%}
+        ,"sameAs": [
+          {%- for link in social_links -%}
+            {%- if link != '' -%}
+              {{ link | json }}{% unless forloop.last %},{% endunless %}
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      {%- endif -%}
+    }
+  </script>
+
+  {%- comment -%} WebSite schema for Google Sitelinks Search Box {%- endcomment -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": "{{ request.origin }}{{ routes.root_url }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ request.origin }}{{ routes.search_url }}?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+{%- endif -%}

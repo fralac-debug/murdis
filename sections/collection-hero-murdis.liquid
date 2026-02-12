@@ -1,0 +1,148 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="collection-hero-murdis color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="collection-hero-murdis__inner page-width">
+
+    {% render 'breadcrumb' %}
+
+    {%- comment -%} Product count ── {%- endcomment -%}
+    <span class="collection-hero-murdis__count">
+      {{ collection.products_count }} {{ 'sections.collection_hero_murdis.pieces' | t }}
+    </span>
+
+    {%- comment -%} ── Collection title (H1 for SEO) ── {%- endcomment -%}
+    <h1 class="collection-hero-murdis__title">
+      {{ collection.title | escape }}
+    </h1>
+
+    {%- comment -%} ── Divider ── {%- endcomment -%}
+    <div class="collection-hero-murdis__divider" aria-hidden="true"></div>
+
+    {%- comment -%} ── Description (SEO) ── {%- endcomment -%}
+    {%- if section.settings.show_description and collection.description != blank -%}
+      <div class="collection-hero-murdis__description rte">
+        {{ collection.description }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-hero-murdis {
+    width: 100%;
+    background-color: transparent !important;
+    overflow: hidden;
+  }
+
+  .collection-hero-murdis__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .collection-hero-murdis__count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(var(--color-foreground), 0.25);
+    margin-bottom: 2rem;
+  }
+
+  .collection-hero-murdis__title {
+    font-size: clamp(4rem, 10vw, 12rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    color: rgba(var(--color-foreground), 1);
+    margin: 0;
+    text-align: center;
+  }
+
+  .collection-hero-murdis__divider {
+    width: 4rem;
+    height: 1px;
+    background-color: rgba(var(--color-foreground), 0.15);
+    margin: 2.4rem 0;
+  }
+
+  .collection-hero-murdis__description {
+    max-width: 600px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(var(--color-foreground), 0.4);
+    margin: 0;
+  }
+
+  .collection-hero-murdis__description p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-hero-murdis__title {
+      letter-spacing: -0.01em;
+    }
+
+    .collection-hero-murdis__description {
+      font-size: 1.05rem;
+      padding: 0 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    }
+  ]
+}
+{% endschema %}

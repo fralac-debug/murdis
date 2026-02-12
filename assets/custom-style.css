@@ -1,0 +1,1290 @@
+/* ==========================================================================
+   Murdis - Dark Theme Base Styles
+   Brand: Black & White | Vampire bite aesthetic
+   ========================================================================== */
+
+/* -- Selection color -- */
+::selection {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* -- Scrollbar (webkit) -- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* -- Global smoothing -- */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* -- Links -- */
+a {
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+/* -- Buttons refinement -- */
+.button,
+.shopify-challenge__button,
+button.shopify-payment-button__button--unbranded {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* -- Images -- */
+img {
+  filter: brightness(1);
+  transition: filter 0.3s ease;
+}
+
+/* -- Smooth section transitions -- */
+.section-template--*,
+.shopify-section {
+  transition: opacity 0.3s ease;
+}
+
+/* -- Form inputs dark override -- */
+input,
+textarea,
+select {
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   Murdis - Header / Navbar
+   Transparent navbar with oversized centered logo
+   ========================================================================== */
+
+/* -- Header: transparent + overlapping on homepage only -- */
+.template-index .header-wrapper {
+  background-color: transparent !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* -- Header: solid dark on all other pages -- */
+.header-wrapper {
+  background-color: rgba(10, 10, 10, 1) !important;
+}
+
+.header-wrapper--border-bottom {
+  border-bottom: none !important;
+}
+
+/* When sticky and scrolled, add subtle dark bg with blur */
+.template-index .shopify-section-header-sticky .header-wrapper {
+  background-color: rgba(10, 10, 10, 0.9) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* -- Logo: oversized & raised -- */
+.header__heading {
+  z-index: 2;
+}
+
+.header__heading-logo-wrapper {
+  overflow: visible !important;
+}
+
+.header__heading-logo,
+.header__heading-logo-wrapper img {
+  max-width: none !important;
+  width: 100px !important;
+  height: auto !important;
+  transform: translateY(12%) scale(1.25);
+  transform-origin: center top;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.5));
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.header__heading-logo-wrapper:hover img,
+.header__heading-logo:hover {
+  transform: translateY(12%) scale(1.35);
+}
+
+/* Reduce logo on scroll */
+.scrolled-past-header .header__heading-logo,
+.scrolled-past-header .header__heading-logo-wrapper img {
+  transform: translateY(5%) scale(1.05);
+}
+
+@media screen and (max-width: 749px) {
+  .header__heading-logo,
+  .header__heading-logo-wrapper img {
+    width: 70px !important;
+    transform: translateY(8%) scale(1.15);
+  }
+
+  .header__heading-logo-wrapper:hover img,
+  .header__heading-logo:hover {
+    transform: translateY(8%) scale(1.25);
+  }
+
+  .scrolled-past-header .header__heading-logo,
+  .scrolled-past-header .header__heading-logo-wrapper img {
+    transform: translateY(5%) scale(1);
+  }
+}
+
+/* -- Header container overflow visible for logo spillover -- */
+.section-header,
+.section-header.shopify-section-group-header-group {
+  overflow: visible !important;
+}
+
+.header {
+  overflow: visible !important;
+}
+
+/* -- Nav links styling -- */
+.header__inline-menu .list-menu__item--link {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.2s ease;
+}
+
+.header__inline-menu .list-menu__item--link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* -- Header icons (cart, account, search) -- */
+.header__icon {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.header__icon:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* ==========================================================================
+   Murdis - Mobile Menu (Drawer)
+   Full-screen dark overlay, centered navigation, bold typography
+   ========================================================================== */
+
+/* -- Drawer: full screen, dark background -- */
+.menu-drawer {
+  background-color: #0a0a0a !important;
+  width: 100% !important;
+  border: none !important;
+  filter: none !important;
+}
+
+.js .menu-drawer {
+  height: calc(100vh - 100%) !important;
+  height: calc(var(--viewport-height, 100vh) - var(--header-bottom-position, 100%)) !important;
+}
+
+/* -- Overlay behind: darker -- */
+.js menu-drawer > details > summary::before,
+.js menu-drawer > details[open]:not(.menu-opening) > summary::before {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* -- Navigation container: center vertically -- */
+.menu-drawer__navigation-container {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.menu-drawer__navigation {
+  padding: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* -- Menu list: centered -- */
+.menu-drawer__menu.has-submenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  width: 100%;
+}
+
+/* -- Menu items: big, bold, centered -- */
+.menu-drawer__menu-item {
+  font-size: 2.8rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  padding: 1rem 3rem !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-align: center;
+  justify-content: center;
+  transition: color 0.3s ease, letter-spacing 0.3s ease !important;
+}
+
+.menu-drawer__menu-item:hover,
+.menu-drawer__menu-item:focus {
+  color: #fff !important;
+  background-color: transparent !important;
+  letter-spacing: 0.12em !important;
+}
+
+.menu-drawer__menu-item--active {
+  color: #fff !important;
+  background-color: transparent !important;
+}
+
+.menu-drawer__menu-item--active:hover {
+  background-color: transparent !important;
+}
+
+/* -- Arrow icon for submenus: lighter, smaller -- */
+.menu-drawer__menu-item > .svg-wrapper {
+  position: static !important;
+  transform: none !important;
+  display: inline-flex;
+  margin-left: 0.8rem;
+  opacity: 0.3;
+  width: 12px !important;
+}
+
+/* -- Submenu panel: same dark fullscreen -- */
+.js .menu-drawer__submenu {
+  background-color: #0a0a0a !important;
+}
+
+.menu-drawer__submenu .menu-drawer__menu-item {
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+}
+
+/* -- Back button in submenu -- */
+.menu-drawer__close-button {
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-size: 1.2rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  justify-content: center;
+  margin-top: 2rem !important;
+  padding: 1rem 3rem !important;
+  background-color: transparent !important;
+}
+
+.menu-drawer__close-button:hover,
+.menu-drawer__close-button:focus {
+  color: rgba(255, 255, 255, 0.7) !important;
+  background-color: transparent !important;
+}
+
+.menu-drawer__close-button .svg-wrapper {
+  opacity: 0.4;
+}
+
+/* -- Utility links at bottom: cleaner -- */
+.menu-drawer__utility-links {
+  background-color: transparent !important;
+  padding: 2rem 3rem !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* -- Account link in drawer -- */
+.menu-drawer__account {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 1.2rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  justify-content: center;
+}
+
+.menu-drawer__account .svg-wrapper {
+  opacity: 0.5;
+}
+
+/* -- Social icons in drawer: centered, subtle -- */
+.menu-drawer .list-social {
+  justify-content: center !important;
+  margin-left: 0 !important;
+  gap: 0.4rem;
+}
+
+.menu-drawer .list-social__link {
+  color: rgba(255, 255, 255, 0.35) !important;
+  transition: color 0.3s ease;
+}
+
+.menu-drawer .list-social__link:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* -- Hamburger icon: custom styling -- */
+.header__icon--menu .svg-wrapper {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* -- Localization in drawer -- */
+.menu-drawer__localization {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* -- Submenu inner: center items -- */
+.menu-drawer__inner-submenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-drawer__inner-submenu .menu-drawer__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (min-width: 750px) {
+  .menu-drawer {
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .menu-drawer__menu-item {
+    font-size: 3.6rem !important;
+  }
+}
+
+/* ==========================================================================
+   Murdis - Page Loader
+   ========================================================================== */
+
+.murdis-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.murdis-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.murdis-loader__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.murdis-loader__gif {
+  width: 200px;
+  height: auto;
+}
+
+/* ==========================================================================
+   Murdis - Product Card
+   Minimal dark aesthetic with smooth crossfade
+   ========================================================================== */
+
+/* -- Card wrapper -- */
+.card-wrapper {
+  position: relative;
+}
+
+/* -- Card base -- */
+.card {
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.card--standard .card__inner {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  transition: border-color 0.5s ease;
+}
+
+.card--standard .card__inner:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* -- Image area -- */
+.card__media {
+  overflow: hidden;
+  border-radius: 2px 2px 0 0;
+}
+
+.card__media .media img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.6s ease !important;
+}
+
+.card:hover .card__media .media img:first-child {
+  transform: scale(1.03);
+}
+
+/* -- Crossfade for secondary image (smooth, not harsh swap) -- */
+.card .media--hover-effect > img + img {
+  opacity: 0;
+  transition: opacity 0.6s ease !important;
+  transform: none !important;
+}
+
+.card:hover .media--hover-effect > img + img {
+  opacity: 1;
+}
+
+.card:hover .media--hover-effect > img:first-child:not(:only-child) {
+  opacity: 0;
+  transform: none;
+}
+
+/* -- Card content (name + price) -- */
+.card__content {
+  padding: 1.2rem 0.4rem 0.8rem;
+}
+
+.card__heading {
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .card__heading {
+  opacity: 0.8;
+}
+
+.card__heading a {
+  color: rgba(var(--color-foreground), 0.9);
+}
+
+/* -- Price styling -- */
+.price {
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.price--on-sale .price-item--regular {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+
+.price--on-sale .price-item--sale {
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+/* -- Badge override (minimal) -- */
+.badge {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #0a0a0a !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.4rem 0.8rem;
+}
+
+/* -- Remove default card shadows and borders -- */
+.card--card,
+.card--standard {
+  box-shadow: none !important;
+}
+
+/* -- Quick add button refinement -- */
+.quick-add__submit {
+  border-radius: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Murdis - The Dark Gallery (Collection Page)
+   Asymmetric grid, desaturated images, cinematic hover reveals
+   ========================================================================== */
+
+/* -- Grid: asymmetric layout -- */
+.collection .product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.collection .product-grid .grid__item {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Asymmetric pattern:
+   Item 1 → 7 columns (feature large)
+   Item 2 → 5 columns
+   Item 3 → 5 columns
+   Item 4 → 7 columns (feature large)
+   Item 5+ → 4 columns each (standard grid) */
+
+.collection .product-grid .grid__item:nth-child(4n + 1) {
+  grid-column: span 7;
+}
+
+.collection .product-grid .grid__item:nth-child(4n + 2) {
+  grid-column: span 5;
+}
+
+.collection .product-grid .grid__item:nth-child(4n + 3) {
+  grid-column: span 5;
+}
+
+.collection .product-grid .grid__item:nth-child(4n + 4) {
+  grid-column: span 7;
+}
+
+/* -- Images: subtle zoom on hover -- */
+.collection .card__media .media img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.6s ease !important;
+}
+
+.collection .card:hover .card__media .media img {
+  transform: scale(1.04);
+}
+
+/* -- Card: remove borders on collection, rely on spacing -- */
+.collection .card--standard .card__inner {
+  border: none;
+}
+
+/* -- Card content: slide-up reveal on hover -- */
+.collection .card__content {
+  padding: 1.4rem 0 0.6rem;
+  position: relative;
+}
+
+.collection .card__heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.collection .price {
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s;
+}
+
+.collection .card-wrapper:hover .price {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -- Feature cards (1st, 4th of each group): taller aspect -- */
+.collection .product-grid .grid__item:nth-child(4n + 1) .card__media,
+.collection .product-grid .grid__item:nth-child(4n + 4) .card__media {
+  aspect-ratio: 3 / 4;
+}
+
+.collection .product-grid .grid__item:nth-child(4n + 1) .media,
+.collection .product-grid .grid__item:nth-child(4n + 4) .media {
+  height: 100%;
+}
+
+/* -- Smaller cards: square-ish aspect -- */
+.collection .product-grid .grid__item:nth-child(4n + 2) .card__media,
+.collection .product-grid .grid__item:nth-child(4n + 3) .card__media {
+  aspect-ratio: 4 / 5;
+}
+
+.collection .product-grid .grid__item:nth-child(4n + 2) .media,
+.collection .product-grid .grid__item:nth-child(4n + 3) .media {
+  height: 100%;
+}
+
+.collection .card__media .media {
+  overflow: hidden;
+}
+
+.collection .card__media .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* -- Facets / Filters: dark minimal -- */
+.collection .facets-vertical-sort {
+  border: none;
+}
+
+.collection .facets__summary {
+  color: rgba(var(--color-foreground), 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.collection .facets__disclosure {
+  border-color: rgba(var(--color-foreground), 0.08);
+}
+
+.collection .facets__label,
+.collection .facets-vertical .facets__heading {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.collection .active-facets__button {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+}
+
+/* -- Sorting select: minimal -- */
+.collection .facet-filters__sort select {
+  background: transparent;
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  color: rgba(var(--color-foreground), 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  border-radius: 0;
+}
+
+/* -- Product count at bottom -- */
+.collection .product-count {
+  color: rgba(var(--color-foreground), 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+}
+
+/* -- Pagination: minimal -- */
+.collection .pagination__item {
+  color: rgba(var(--color-foreground), 0.4);
+  transition: color 0.3s ease;
+}
+
+.collection .pagination__item:hover,
+.collection .pagination__item.pagination__item--current {
+  color: rgba(var(--color-foreground), 1);
+}
+
+/* -- Mobile: "The Feed" — full-width immersive cards -- */
+@media screen and (max-width: 749px) {
+  .collection .product-grid {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .collection .product-grid .grid__item,
+  .collection .product-grid .grid__item:nth-child(4n + 1),
+  .collection .product-grid .grid__item:nth-child(4n + 2),
+  .collection .product-grid .grid__item:nth-child(4n + 3),
+  .collection .product-grid .grid__item:nth-child(4n + 4) {
+    width: 100% !important;
+  }
+
+  /* Card wrapper: positioning context */
+  .collection .card-wrapper {
+    position: relative;
+  }
+
+  .collection .card {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .collection .card--standard .card__inner {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  /* Image: full width, tall, no grayscale on mobile */
+  .collection .product-grid .grid__item .card__media,
+  .collection .product-grid .grid__item:nth-child(4n + 1) .card__media,
+  .collection .product-grid .grid__item:nth-child(4n + 2) .card__media,
+  .collection .product-grid .grid__item:nth-child(4n + 3) .card__media,
+  .collection .product-grid .grid__item:nth-child(4n + 4) .card__media {
+    aspect-ratio: 3 / 4;
+    border-radius: 0;
+  }
+
+  .collection .card__media .media {
+    border-radius: 0;
+  }
+
+  .collection .card__media .media img {
+    filter: grayscale(0) brightness(1);
+  }
+
+  /* First card__content (inside card__inner): hide text, keep badge visible */
+  .collection .card__inner > .card__content .card__information {
+    display: none !important;
+  }
+
+  /* The second card__content (direct child of .card) becomes overlay */
+  .collection .card > .card__content {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    padding: 4rem 1.6rem 1.6rem !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%) !important;
+    z-index: 2;
+  }
+
+  .collection .card > .card__content .card__information {
+    width: 100%;
+  }
+
+  /* Hide quick-add and duplicate badge on mobile for clean feed look */
+  .collection .card > .card__content .quick-add,
+  .collection .card > .card__content > .card__badge {
+    display: none !important;
+  }
+
+  .collection .card__heading {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin: 0;
+  }
+
+  .collection .card__heading a {
+    color: #fff !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .collection .price {
+    opacity: 1;
+    transform: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .collection .price .price-item {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  /* Price + sold out badge: keep inline */
+  .collection .price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.8rem;
+  }
+
+  .collection .price .badge {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  /* Badge on mobile: force top-left inside image area */
+  .collection .card__inner > .card__content {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    padding: 0 !important;
+    background: none !important;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .collection .card__inner .card__badge {
+    position: absolute !important;
+    top: 0.8rem !important;
+    left: 0.8rem !important;
+    bottom: auto !important;
+    right: auto !important;
+    pointer-events: auto;
+  }
+
+  .collection .card__inner .card__badge .badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    color: #0a0a0a !important;
+  }
+
+}
+
+/* -- Tablet -- */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .collection .product-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .collection .product-grid .grid__item:nth-child(4n + 1) {
+    grid-column: span 4;
+  }
+
+  .collection .product-grid .grid__item:nth-child(4n + 2) {
+    grid-column: span 2;
+  }
+
+  .collection .product-grid .grid__item:nth-child(4n + 3) {
+    grid-column: span 2;
+  }
+
+  .collection .product-grid .grid__item:nth-child(4n + 4) {
+    grid-column: span 4;
+  }
+}
+
+/* ==========================================================================
+   Murdis - Product Page: The Showcase
+   Dark luxury product detail page — immersive gallery, refined info panel,
+   conversion-focused mobile experience
+   ========================================================================== */
+
+/* -- Reset media styling for product page -- */
+product-info {
+  --media-radius: 0px;
+  --media-border-width: 0px;
+  --media-shadow-visible: 0;
+}
+
+product-info .page-width {
+  max-width: 100%;
+  padding: 0;
+}
+
+product-info .global-media-settings {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* -- Vendor text: small, spaced, muted -- */
+product-info .product__text.caption-with-letter-spacing {
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: rgba(var(--color-foreground), 0.35);
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+}
+
+/* -- Product title: large, light, elegant -- */
+product-info .product__title h1,
+product-info .product__title h2 {
+  font-size: 3.2rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-transform: none;
+}
+
+/* -- Subtitle: italic, muted -- */
+product-info .product__text.subtitle {
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.45);
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+/* -- Price: prominent -- */
+product-info .price--large {
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+product-info .product__tax {
+  font-size: 1.1rem;
+  color: rgba(var(--color-foreground), 0.3);
+  margin-top: -1rem;
+}
+
+/* -- Variant pills: square, refined -- */
+product-info .product-form__input--pill input[type='radio'] + label {
+  border-color: rgba(var(--color-foreground), 0.15);
+  border-radius: 0;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+product-info .product-form__input--pill input[type='radio'] + label:hover {
+  border-color: rgba(var(--color-foreground), 0.5);
+}
+
+product-info .product-form__input--pill input[type='radio']:checked + label {
+  border-color: rgb(var(--color-foreground));
+}
+
+/* -- Quantity selector label -- */
+product-info .quantity__label,
+product-info .product-form__input .form__label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(var(--color-foreground), 0.45);
+}
+
+/* -- Quantity box: square -- */
+product-info .quantity {
+  border-radius: 0;
+}
+
+/* -- Buy buttons: bold, full-width, inviting -- */
+product-info .product-form__buttons {
+  max-width: 100%;
+}
+
+product-info .product-form__submit {
+  min-height: 5.4rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 0 !important;
+  transition: all 0.3s ease;
+}
+
+product-info .shopify-payment-button__button {
+  border-radius: 0 !important;
+  min-height: 5.4rem;
+}
+
+product-info .shopify-payment-button__more-options {
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.35);
+}
+
+/* -- Accordion tabs: dark & minimal -- */
+product-info .accordion {
+  border-top-color: rgba(var(--color-foreground), 0.06);
+  border-bottom-color: rgba(var(--color-foreground), 0.06);
+}
+
+product-info .accordion + .accordion {
+  border-top: none;
+}
+
+product-info .accordion summary {
+  padding: 1.8rem 0;
+  transition: opacity 0.3s ease;
+}
+
+product-info .accordion summary:hover {
+  opacity: 0.7;
+}
+
+product-info .accordion__title {
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+product-info .accordion .summary__icon .svg-wrapper {
+  opacity: 0.3;
+}
+
+product-info .accordion__content {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+/* -- Description: readable, muted -- */
+product-info .product__description {
+  font-size: 1.35rem;
+  line-height: 1.7;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+/* -- Share button: subtle -- */
+product-info .share-button {
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+product-info .share-button:hover {
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Product Page — DESKTOP
+   ========================================================================== */
+
+@media screen and (min-width: 990px) {
+  product-info .product__title h1,
+  product-info .product__title h2 {
+    font-size: 3.6rem;
+  }
+
+  product-info .price--large {
+    font-size: 2.2rem;
+  }
+
+  /* Gallery: tight gap between stacked images */
+  product-info .product.grid {
+    gap: 0;
+  }
+
+  product-info .product__media-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  product-info .product__info-wrapper {
+    padding: 0 4rem 0 5rem !important;
+  }
+
+  product-info .product__media-list {
+    gap: 4px;
+    padding-right: 0;
+  }
+
+  product-info .product__media-item .media {
+    border-radius: 0;
+  }
+
+  /* Stacked items: full width */
+  product-info .product--stacked .product__media-item {
+    max-width: 100%;
+  }
+
+  /* Subtle zoom on hover */
+  product-info .product__media-item .media img {
+    transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+  }
+
+  product-info .product__media-item:hover .media img {
+    transform: scale(1.03);
+  }
+
+  /* Hide zoom icon — clean, not gimmicky */
+  product-info .product__modal-opener .product__media-icon {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Product Page — MOBILE (90% of traffic)
+   ========================================================================== */
+
+@media screen and (max-width: 749px) {
+  /* Remove section top padding for immersive feel */
+  product-info {
+    padding-top: 0 !important;
+  }
+
+  /* Media: edge-to-edge */
+  product-info .product__media-list {
+    margin-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  product-info .product__media-wrapper slider-component {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  product-info .product__media-list .product__media-item {
+    width: 100%;
+  }
+
+  product-info .product__media-item .media {
+    border-radius: 0;
+  }
+
+  /* Hide scrollbar */
+  product-info .slider.product__media-list::-webkit-scrollbar {
+    height: 0;
+  }
+
+  /* Hide zoom icon on mobile */
+  product-info .product__media-icon {
+    display: none;
+  }
+
+  /* Info wrapper: padding + space for sticky button */
+  product-info .product__info-wrapper {
+    padding: 2.4rem 2rem 12rem;
+  }
+
+  /* Center text on mobile */
+  product-info .product__text.caption-with-letter-spacing,
+  product-info .product__title,
+  product-info .product__title h1,
+  product-info .product__title h2,
+  product-info .price,
+  product-info .price--large,
+  product-info .product__tax {
+    text-align: center;
+  }
+
+  product-info .product__title h1,
+  product-info .product__title h2 {
+    font-size: 2.8rem;
+  }
+
+  product-info .product__text.subtitle {
+    text-align: center;
+  }
+
+  product-info .price--large {
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Variant pills: centered, larger for touch */
+  product-info .product-form__input--pill {
+    justify-content: center;
+  }
+
+  product-info .product-form__input--pill input[type='radio'] + label {
+    padding: 1.4rem 2.6rem;
+    font-size: 1.25rem;
+    min-height: 4.8rem;
+  }
+
+  product-info .product-form__input .form__label {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Description: left-aligned for readability */
+  product-info .product__description {
+    text-align: left;
+    padding: 0 0.5rem;
+  }
+
+  /* Accordion: full width */
+  product-info .accordion__title {
+    font-size: 1.25rem;
+  }
+
+  /* ── Sticky buy button: fixed at bottom ── */
+  product-info .product-form__buttons {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 99 !important;
+    background-color: rgb(var(--color-background));
+    padding: 1.2rem 1.6rem !important;
+    padding-bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px)) !important;
+    border-top: 1px solid rgba(var(--color-foreground), 0.06);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Ensure no parent breaks fixed positioning */
+  product-info .product__info-wrapper,
+  product-info .product__info-container,
+  product-info .product__column-sticky {
+    transform: none !important;
+    will-change: auto !important;
+    contain: none !important;
+  }
+
+  product-info .product-form__submit {
+    min-height: 5rem;
+    font-size: 1.3rem;
+  }
+
+  /* Hide dynamic checkout in sticky bar for clean single CTA */
+  product-info .product-form__buttons .shopify-payment-button {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Product Page — Related Products
+   ========================================================================== */
+
+product-recommendations {
+  padding-top: 6rem !important;
+}
+
+product-recommendations .related-products__heading {
+  text-align: center;
+  font-size: 1.15rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(var(--color-foreground), 0.4);
+  margin-bottom: 3rem;
+}
+
+product-recommendations .product-grid {
+  gap: 1rem;
+}
+
+@media screen and (max-width: 749px) {
+  product-recommendations {
+    padding: 4rem 1.5rem 0 !important;
+  }
+
+  product-recommendations .related-products__heading {
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+  }
+}
