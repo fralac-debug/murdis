@@ -20,7 +20,7 @@
         "show_rating": false,
         "enable_filtering": true,
         "filter_type": "horizontal",
-        "enable_sorting": true,
+        "enable_sorting": false,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "padding_top": 24,
