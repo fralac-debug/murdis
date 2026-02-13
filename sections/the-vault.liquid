@@ -8,11 +8,15 @@
   {%- comment -%} HERO: fullscreen title reveal {%- endcomment -%}
   <section class="vault__hero">
     <div class="vault__hero-overlay"></div>
-    {% if section.settings.hero_image %}
+    {%- if section.settings.hero_image or section.settings.hero_asset_image != blank -%}
       <div class="vault__hero-bg">
-        {{ section.settings.hero_image | image_url: width: 2000 | image_tag: loading: 'eager' }}
+        {%- if section.settings.hero_image -%}
+          {{ section.settings.hero_image | image_url: width: 2000 | image_tag: loading: 'eager' }}
+        {%- elsif section.settings.hero_asset_image != blank -%}
+          <img src="{{ section.settings.hero_asset_image | asset_url }}" alt="" loading="eager" width="2000">
+        {%- endif -%}
       </div>
-    {% endif %}
+    {%- endif -%}
     <div class="vault__hero-content">
       <div class="vault__hero-line vault__reveal" data-vault-delay="0">
         <span>{{ section.settings.hero_line_1 }}</span>
@@ -35,13 +39,17 @@
     {%- case block.type -%}
 
       {%- when 'chapter' -%}
-        <section class="vault__chapter" {{ block.shopify_attributes }}>
+        <section class="vault__chapter vault__chapter--{{ block.settings.layout }}" {{ block.shopify_attributes }}>
           <div class="vault__chapter-inner">
-            {% if block.settings.image %}
+            {%- if block.settings.image or block.settings.asset_image != blank -%}
               <div class="vault__chapter-image vault__parallax">
-                {{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy' }}
+                {%- if block.settings.image -%}
+                  {{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy' }}
+                {%- elsif block.settings.asset_image != blank -%}
+                  <img src="{{ block.settings.asset_image | asset_url }}" alt="{{ block.settings.heading | escape }}" loading="lazy" width="1400">
+                {%- endif -%}
               </div>
-            {% endif %}
+            {%- endif -%}
             <div class="vault__chapter-text">
               {% if block.settings.number != blank %}
                 <span class="vault__chapter-number vault__reveal">{{ block.settings.number }}</span>
@@ -58,11 +66,15 @@
 
       {%- when 'full_image' -%}
         <section class="vault__full-image vault__parallax-wrap" {{ block.shopify_attributes }}>
-          {% if block.settings.image %}
+          {%- if block.settings.image or block.settings.asset_image != blank -%}
             <div class="vault__full-image-bg vault__parallax">
-              {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy' }}
+              {%- if block.settings.image -%}
+                {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy' }}
+              {%- elsif block.settings.asset_image != blank -%}
+                <img src="{{ block.settings.asset_image | asset_url }}" alt="" loading="lazy" width="2000">
+              {%- endif -%}
             </div>
-          {% endif %}
+          {%- endif -%}
           {% if block.settings.quote != blank %}
             <div class="vault__full-image-quote vault__reveal">
               <p>&ldquo;{{ block.settings.quote }}&rdquo;</p>
@@ -268,11 +280,11 @@
     align-items: center;
   }
 
-  .vault__chapter:nth-child(even) .vault__chapter-inner {
+  .vault__chapter--img-right .vault__chapter-inner {
     direction: rtl;
   }
 
-  .vault__chapter:nth-child(even) .vault__chapter-inner > * {
+  .vault__chapter--img-right .vault__chapter-inner > * {
     direction: ltr;
   }
 
@@ -623,6 +635,12 @@
     },
     {
       "type": "text",
+      "id": "hero_asset_image",
+      "label": "Hero image from assets (filename)",
+      "info": "e.g. hero.JPG — used if no image picker above"
+    },
+    {
+      "type": "text",
       "id": "hero_line_1",
       "label": "Hero line 1",
       "default": "Born from"
@@ -646,6 +664,16 @@
       "name": "Chapter",
       "settings": [
         {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout",
+          "default": "img-left",
+          "options": [
+            { "value": "img-left", "label": "Image left" },
+            { "value": "img-right", "label": "Image right" }
+          ]
+        },
+        {
           "type": "text",
           "id": "number",
           "label": "Chapter number",
@@ -667,6 +695,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "asset_image",
+          "label": "Image from assets (filename)",
+          "info": "e.g. hero.JPG — used if no image picker above"
         }
       ]
     },
@@ -678,6 +712,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "asset_image",
+          "label": "Image from assets (filename)",
+          "info": "e.g. hero.JPG — used if no image picker above"
         },
         {
           "type": "text",
