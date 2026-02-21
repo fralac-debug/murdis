@@ -19,6 +19,7 @@
             "number": "01 — L'origine",
             "heading": "Sopravvivenza come evoluzione",
             "text": "<p>Murdis è un brand contemporaneo che nasce dal concetto di sopravvivenza come evoluzione e forza interiore. Non un rifugio, ma una dichiarazione.</p>",
+            "image": "shopify://shop_images/francsc-03001.jpg",
             "asset_image": "hero.JPG"
           }
         },
@@ -29,6 +30,7 @@
         "full_image_1": {
           "type": "full_image",
           "settings": {
+            "image": "shopify://shop_images/francsc-03113.jpg",
             "asset_image": "hero.JPG",
             "quote": "Le collezioni uniscono struttura ed essenzialità."
           }
