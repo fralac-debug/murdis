@@ -4,9 +4,9 @@
       "type": "the-vault",
       "settings": {
         "hero_asset_image": "hero.JPG",
-        "hero_line_1": "Nati dal",
-        "hero_line_2": "Buio",
-        "hero_line_3": "Made in Italy"
+        "hero_line_1": "Sopravvivenza",
+        "hero_line_2": "come",
+        "hero_line_3": "Evoluzione"
       },
       "blocks": {
         "chapter_1": {
@@ -14,8 +14,8 @@
           "settings": {
             "layout": "img-left",
             "number": "01 — L'origine",
-            "heading": "Dove tutto ha inizio",
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
+            "heading": "Sopravvivenza come evoluzione",
+            "text": "<p>Murdis è un brand contemporaneo che nasce dal concetto di sopravvivenza come evoluzione e forza interiore. Non un rifugio, ma una dichiarazione.</p>",
             "asset_image": "hero.JPG"
           }
         },
@@ -26,7 +26,7 @@
           "type": "full_image",
           "settings": {
             "asset_image": "hero.JPG",
-            "quote": "Non seguiamo la luce. Noi vestiamo il buio."
+            "quote": "Le collezioni uniscono struttura ed essenzialità."
           }
         },
         "divider_2": {
@@ -36,9 +36,9 @@
           "type": "chapter",
           "settings": {
             "layout": "img-right",
-            "number": "02 — La visione",
-            "heading": "Ogni cucitura è una scelta",
-            "text": "<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+            "number": "02 — La forma",
+            "heading": "Struttura ed essenzialità",
+            "text": "<p>Le silhouette sono strutturate, essenziali, definite. Ogni linea è pensata per affermare, non per decorare.</p>",
             "asset_image": "hero.JPG"
           }
         },
@@ -49,9 +49,9 @@
           "type": "chapter",
           "settings": {
             "layout": "img-left",
-            "number": "03 — Il processo",
-            "heading": "Dal pensiero alla materia",
-            "text": "<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione.</p>",
+            "number": "03 — L'identità",
+            "heading": "Resistenza e presenza",
+            "text": "<p>Ogni capo rappresenta resistenza e identità. Ogni creazione afferma presenza.</p>",
             "asset_image": "hero.JPG"
           }
         },
@@ -61,11 +61,11 @@
         "manifesto": {
           "type": "manifesto",
           "settings": {
-            "heading": "Il nostro credo",
-            "line_1": "Ogni capo nasce da un'idea che rifiuta le regole.",
-            "line_2": "Disegnato nel silenzio, cucito con ossessione.",
-            "line_3": "Non è moda. È un'affermazione.",
-            "line_4": "Per chi ha il coraggio di indossare il buio."
+            "heading": "Identità pura",
+            "line_1": "Sopravvivenza come evoluzione e forza interiore.",
+            "line_2": "Silhouette strutturate, essenziali, definite.",
+            "line_3": "Ogni capo rappresenta resistenza e identità.",
+            "line_4": "Ogni creazione afferma presenza."
           }
         },
         "divider_5": {
