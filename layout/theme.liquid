@@ -319,13 +319,13 @@
         function hideLoader() {
           if (loader) {
             loader.classList.add('is-hidden');
-            setTimeout(function() { loader.remove(); }, 1000);
+            setTimeout(function() { loader.remove(); }, 500);
           }
         }
         window.addEventListener('load', function() {
-          setTimeout(hideLoader, 2800);
+          setTimeout(hideLoader, 1500);
         });
-        setTimeout(hideLoader, 7000);
+        setTimeout(hideLoader, 4000);
       })();
     </script>
 
