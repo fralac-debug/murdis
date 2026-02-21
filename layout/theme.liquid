@@ -309,11 +309,16 @@
     <script>
       (function() {
         var loader = document.getElementById('murdis-loader');
+        if (sessionStorage.getItem('murdis-loaded')) {
+          if (loader) loader.remove();
+          return;
+        }
         function hideLoader() {
           if (loader) {
             loader.classList.add('is-hidden');
             setTimeout(function() { loader.remove(); }, 600);
           }
+          sessionStorage.setItem('murdis-loaded', '1');
         }
         window.addEventListener('load', function() {
           setTimeout(hideLoader, 2000);
