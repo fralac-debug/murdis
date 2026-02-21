@@ -310,12 +310,6 @@
       (function() {
         var loader = document.getElementById('murdis-loader');
         if (!loader) return;
-        var gif = loader.querySelector('.murdis-loader__gif');
-        if (gif) {
-          var src = gif.src;
-          gif.src = '';
-          gif.src = src + '?t=' + Date.now();
-        }
         function hideLoader() {
           if (loader) {
             loader.classList.add('is-hidden');
@@ -323,7 +317,7 @@
           }
         }
         window.addEventListener('load', function() {
-          setTimeout(hideLoader, 1500);
+          setTimeout(hideLoader, 1800);
         });
         setTimeout(hideLoader, 4000);
       })();
