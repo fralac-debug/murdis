@@ -1,13 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "vault": {
       "type": "the-vault",
-      "settings": {
-        "hero_asset_image": "hero.JPG",
-        "hero_line_1": "Sopravvivenza",
-        "hero_line_2": "come",
-        "hero_line_3": "Evoluzione"
-      },
       "blocks": {
         "chapter_1": {
           "type": "chapter",
@@ -20,7 +23,8 @@
           }
         },
         "divider_1": {
-          "type": "divider"
+          "type": "divider",
+          "settings": {}
         },
         "full_image_1": {
           "type": "full_image",
@@ -30,7 +34,8 @@
           }
         },
         "divider_2": {
-          "type": "divider"
+          "type": "divider",
+          "settings": {}
         },
         "chapter_2": {
           "type": "chapter",
@@ -43,7 +48,8 @@
           }
         },
         "divider_3": {
-          "type": "divider"
+          "type": "divider",
+          "settings": {}
         },
         "chapter_3": {
           "type": "chapter",
@@ -56,7 +62,8 @@
           }
         },
         "divider_4": {
-          "type": "divider"
+          "type": "divider",
+          "settings": {}
         },
         "manifesto": {
           "type": "manifesto",
@@ -69,7 +76,8 @@
           }
         },
         "divider_5": {
-          "type": "divider"
+          "type": "divider",
+          "settings": {}
         },
         "cta": {
           "type": "cta",
@@ -93,7 +101,14 @@
         "manifesto",
         "divider_5",
         "cta"
-      ]
+      ],
+      "settings": {
+        "hero_image": "shopify://shop_images/francsc-03030.jpg",
+        "hero_asset_image": "hero.JPG",
+        "hero_line_1": "Sopravvivenza",
+        "hero_line_2": "come",
+        "hero_line_3": "Evoluzione"
+      }
     }
   },
   "order": [
