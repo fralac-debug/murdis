@@ -309,21 +309,23 @@
     <script>
       (function() {
         var loader = document.getElementById('murdis-loader');
-        if (sessionStorage.getItem('murdis-loaded')) {
-          if (loader) loader.remove();
-          return;
+        if (!loader) return;
+        var gif = loader.querySelector('.murdis-loader__gif');
+        if (gif) {
+          var src = gif.src;
+          gif.src = '';
+          gif.src = src + '?t=' + Date.now();
         }
         function hideLoader() {
           if (loader) {
             loader.classList.add('is-hidden');
-            setTimeout(function() { loader.remove(); }, 600);
+            setTimeout(function() { loader.remove(); }, 1000);
           }
-          sessionStorage.setItem('murdis-loaded', '1');
         }
         window.addEventListener('load', function() {
-          setTimeout(hideLoader, 2000);
+          setTimeout(hideLoader, 2800);
         });
-        setTimeout(hideLoader, 6000);
+        setTimeout(hideLoader, 7000);
       })();
     </script>
 
