@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -11,7 +20,8 @@
           }
         },
         "title": {
-          "type": "title"
+          "type": "title",
+          "settings": {}
         },
         "caption": {
           "type": "text",
@@ -21,16 +31,19 @@
           }
         },
         "price": {
-          "type": "price"
+          "type": "price",
+          "settings": {}
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button"
+            "picker_type": "button",
+            "swatch_shape": "circle"
           }
         },
         "quantity_selector": {
-          "type": "quantity_selector"
+          "type": "quantity_selector",
+          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -44,7 +57,7 @@
           "settings": {
             "heading": "Materiali",
             "icon": "leather",
-            "content": "",
+            "content": "<p>{{ block.settings.page.metafields.custom.materiali.value }}</p>",
             "page": ""
           }
         },
@@ -53,7 +66,7 @@
           "settings": {
             "heading": "Spedizione e resi",
             "icon": "truck",
-            "content": "",
+            "content": "<p>{{ block.settings.page.metafields.custom.spedizione.value }}</p>",
             "page": ""
           }
         },
@@ -62,7 +75,7 @@
           "settings": {
             "heading": "Dimensioni",
             "icon": "ruler",
-            "content": "",
+            "content": "<p>{{ block.settings.page.metafields.custom.dimensioni.value }}</p>",
             "page": ""
           }
         },
@@ -71,12 +84,13 @@
           "settings": {
             "heading": "Cura del prodotto",
             "icon": "heart",
-            "content": "",
+            "content": "<p>{{ block.settings.page.metafields.custom.cura.value }}</p>",
             "page": ""
           }
         },
         "description": {
-          "type": "description"
+          "type": "description",
+          "settings": {}
         },
         "share": {
           "type": "share",
@@ -102,10 +116,14 @@
       ],
       "settings": {
         "enable_sticky_info": true,
-        "gallery_layout": "stacked",
+        "color_scheme": "",
         "media_size": "large",
         "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
         "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
@@ -117,13 +135,15 @@
       "settings": {
         "heading": "Potrebbe piacerti anche",
         "heading_size": "h2",
+        "products_to_show": 4,
         "columns_desktop": 4,
+        "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "portrait",
+        "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "columns_mobile": "2",
         "padding_top": 0,
         "padding_bottom": 40
       }
