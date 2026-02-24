@@ -57,7 +57,7 @@
           "settings": {
             "heading": "Materiali",
             "icon": "leather",
-            "content": "<p>{{ block.settings.page.metafields.custom.materiali.value }}</p>",
+            "content": "<p>{{ product.metafields.custom.materiali.value }}</p>",
             "page": ""
           }
         },
@@ -66,7 +66,7 @@
           "settings": {
             "heading": "Spedizione e resi",
             "icon": "truck",
-            "content": "<p>{{ block.settings.page.metafields.custom.spedizione.value }}</p>",
+            "content": "<p>{{ product.metafields.custom.spedizione.value }}</p>",
             "page": ""
           }
         },
@@ -75,7 +75,7 @@
           "settings": {
             "heading": "Dimensioni",
             "icon": "ruler",
-            "content": "<p>{{ block.settings.page.metafields.custom.dimensioni.value }}</p>",
+            "content": "<p>{{ product.metafields.custom.dimensioni.value }}</p>",
             "page": ""
           }
         },
@@ -84,7 +84,7 @@
           "settings": {
             "heading": "Cura del prodotto",
             "icon": "heart",
-            "content": "<p>{{ block.settings.page.metafields.custom.cura.value }}</p>",
+            "content": "<p>{{ product.metafields.custom.cura.value }}</p>",
             "page": ""
           }
         },
