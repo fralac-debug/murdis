@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -13,7 +22,7 @@
         "subheading": {
           "type": "subheading",
           "settings": {
-            "subheading": "Abbigliamento e accessori dal morso unico"
+            "subheading": "L’architettura della resistenza urbana"
           }
         },
         "buttons": {
@@ -43,8 +52,8 @@
     "spotlight": {
       "type": "spotlight-collection",
       "settings": {
-        "title": "Nuovi arrivi",
-        "subtitle": "I pezzi selezionati dall'ultimo drop",
+        "title": "Bite to survive",
+        "subtitle": "NEW DROP",
         "collection": "all",
         "products_to_show": 6,
         "show_view_all": true,
@@ -59,13 +68,13 @@
         "line_1": {
           "type": "line",
           "settings": {
-            "text": "Nati dall'oscurità."
+            "text": "born from darkness."
           }
         },
         "line_2": {
           "type": "line",
           "settings": {
-            "text": "Indossati con morso."
+            "text": "BITE TO SURVIVE."
           }
         },
         "divider": {
@@ -111,7 +120,10 @@
           "settings": {
             "label": "Origine",
             "title": "Made in Italy",
-            "text": "Pensato, disegnato e prodotto in Italia. Dalla creatività alla cucitura, tutto nasce qui."
+            "text": "Pensato, disegnato e prodotto in Italia. Dalla creatività alla cucitura, tutto nasce qui.",
+            "link_label": "",
+            "link_url": "",
+            "link_external": false
           }
         },
         "quality": {
@@ -119,7 +131,10 @@
           "settings": {
             "label": "Qualità",
             "title": "Materiali premium",
-            "text": "Ogni pezzo è realizzato con tessuti e accessori selezionati con cura."
+            "text": "Ogni pezzo è realizzato con tessuti e accessori selezionati con cura.",
+            "link_label": "",
+            "link_url": "",
+            "link_external": false
           }
         },
         "shipping": {
@@ -127,7 +142,10 @@
           "settings": {
             "label": "Spedizione",
             "title": "Spedizione veloce",
-            "text": "Consegna rapida in tutta Europa. Il tuo ordine parte entro 24–48 ore."
+            "text": "Consegna rapida in tutta Europa. Il tuo ordine parte entro 24–48 ore.",
+            "link_label": "",
+            "link_url": "",
+            "link_external": false
           }
         },
         "returns": {
@@ -135,7 +153,10 @@
           "settings": {
             "label": "Resi",
             "title": "Reso entro 14 giorni",
-            "text": "Non sei soddisfatto? Restituisci entro 14 giorni, senza domande."
+            "text": "Non sei soddisfatto? Restituisci entro 14 giorni, senza domande.",
+            "link_label": "",
+            "link_url": "",
+            "link_external": false
           }
         }
       },
