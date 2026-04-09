@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
@@ -32,11 +41,12 @@
         "social"
       ],
       "settings": {
-        "tagline": "Abbigliamento e accessori dal morso unico",
+        "tagline": "",
         "color_scheme": "scheme-4",
         "newsletter_enable": true,
-        "newsletter_heading": "Unisciti al branco",
+        "newsletter_heading": "Registrati a murdis",
         "show_policy": true,
+        "legal_info": "Murdis",
         "payment_enable": true,
         "padding_top": 80,
         "padding_bottom": 60
