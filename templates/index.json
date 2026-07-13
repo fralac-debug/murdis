@@ -54,7 +54,7 @@
       "settings": {
         "title": "Bite to survive",
         "subtitle": "NEW DROP",
-        "collection": "all",
+        "collection": "frontpage",
         "products_to_show": 6,
         "show_view_all": true,
         "color_scheme": "scheme-1",
